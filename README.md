@@ -1,21 +1,21 @@
 # Wedding RV Website
 
-Single-page wedding website per Valentina e Riccardo, costruito con Next.js 16, React 19, TypeScript, Tailwind CSS 4 e Framer Motion.
+Single-page wedding website for Valentina and Riccardo, built with Next.js 16, React 19, TypeScript, Tailwind CSS 4, and Framer Motion.
 
-Il progetto punta a un tono editoriale e premium: palette calda, texture carta, tipografia elegante, animazioni morbide e una intro iniziale a forma di lettera da aprire.
+The project is designed to feel editorial and premium, with a warm palette, paper textures, elegant typography, soft motion, and an opening letter-style intro.
 
-## Panoramica
+## Overview
 
-Il sito e pensato come landing page unica, consultabile soprattutto da mobile, con le informazioni principali del matrimonio raccolte in un solo flusso:
+The site is structured as a single landing page, optimized mainly for mobile, with the core wedding details presented in one continuous flow:
 
-- intro immersiva con lettera animata
-- hero section con riepilogo rapido della giornata
-- sezione cerimonia
-- sezione ricevimento con link mappa
-- sezione regalo con switch tra bonifico e lista nozze
-- chiusura finale con messaggio degli sposi
+- immersive animated letter intro
+- hero section with a quick event summary
+- ceremony section
+- reception section with map link
+- gift section with a switch between bank transfer and registry
+- closing section with a final message from the couple
 
-L'identita visiva ruota attorno al tema dell'albero: radici, crescita, luce e futuro condiviso.
+The overall visual direction is built around the tree motif: roots, growth, light, and shared future.
 
 ## Stack
 
@@ -24,35 +24,35 @@ L'identita visiva ruota attorno al tema dell'albero: radici, crescita, luce e fu
 - TypeScript
 - Tailwind CSS 4
 - Framer Motion
-- `next/font` per il caricamento ottimizzato dei font
-- metadata statici in `app/layout.tsx`
-- output `standalone` per deploy Node/Docker
+- `next/font` for optimized font loading
+- static metadata in `app/layout.tsx`
+- `standalone` output for Node.js and Docker deployment
 
-## Caratteristiche principali
+## Key Features
 
-- Intro cinematic con stato persistito in `sessionStorage`, cosi non viene riproposta a ogni refresh.
-- Supporto a `prefers-reduced-motion` per ridurre animazioni invasive.
-- Contenuti centralizzati in un singolo file dati.
-- Architettura semplice: pagina unica assemblata da sezioni riusabili.
-- Deploy facilitato tramite Docker multi-stage.
+- Cinematic intro with `sessionStorage` persistence, so it is not shown again on every refresh.
+- `prefers-reduced-motion` support to keep animations accessible.
+- Centralized editable content in a single data file.
+- Simple architecture: one page assembled from reusable sections.
+- Production-friendly Docker setup with a multi-stage image build.
 
-## Requisiti
+## Requirements
 
-- Node.js 22 consigliato
+- Node.js 22 recommended
 - npm 10+
 
-Non sono richieste variabili ambiente per l'avvio base del progetto.
+No environment variables are required for the basic project setup.
 
-## Avvio in locale
+## Local Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Apri [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000).
 
-## Script disponibili
+## Available Scripts
 
 ```bash
 npm run dev
@@ -62,36 +62,36 @@ npm run build
 npm run start
 ```
 
-## Dove modificare i contenuti
+## Where to Edit Content
 
-Quasi tutto il contenuto editoriale del sito e centralizzato in:
+Almost all editorial content is centralized in:
 
 ```text
 data/site-content.ts
 ```
 
-Da qui puoi aggiornare:
+From there you can update:
 
-- nomi degli sposi
-- testi introduttivi e finali
-- data, ora e dettagli della cerimonia
-- location e logistica del ricevimento
-- link Google Maps
+- couple names
+- intro and closing copy
+- ceremony date, time, and details
+- reception location and logistics
+- Google Maps link
 - IBAN
-- link lista nozze
-- voci della navigazione
+- wedding registry link
+- floating navigation labels
 
-## Checklist prima di andare online
+## Pre-Launch Checklist
 
-Nel contenuto attuale ci sono alcuni placeholder che conviene completare prima del deploy definitivo:
+The current content still includes a few placeholders that should be completed before the final launch:
 
-1. Inserire l'indirizzo completo del ricevimento.
-2. Verificare che il link Google Maps punti al luogo esatto.
-3. Compilare l'IBAN definitivo.
-4. Inserire il link reale della lista nozze, se previsto.
-5. Ricontrollare metadata SEO e descrizioni social in `app/layout.tsx`.
+1. Add the full reception address.
+2. Confirm that the Google Maps link points to the exact venue.
+3. Fill in the final IBAN value.
+4. Add the real wedding registry URL, if needed.
+5. Review SEO and social metadata in `app/layout.tsx`.
 
-## Struttura del progetto
+## Project Structure
 
 ```text
 app/
@@ -118,38 +118,38 @@ Dockerfile
 docker-compose.yml
 ```
 
-## Note di implementazione
+## Implementation Notes
 
-- La homepage e composta in `app/page.tsx` assemblando sezioni pure e contenuto tipizzato.
-- I metadata della pagina sono definiti in `app/layout.tsx`.
-- I font Google sono gestiti tramite `next/font/google`, quindi vengono ottimizzati dal framework.
-- Il progetto usa `output: "standalone"` in `next.config.ts` per una build piu leggera in produzione.
+- The homepage is assembled in `app/page.tsx` using typed content and reusable sections.
+- Page metadata is defined in `app/layout.tsx`.
+- Google fonts are handled through `next/font/google`, so they are optimized by the framework.
+- The project uses `output: "standalone"` in `next.config.ts` for a leaner production build.
 
 ## Docker
 
-### Build immagine
+### Build the image
 
 ```bash
 docker build -t wedding-rv-website .
 ```
 
-### Avvio con Docker Compose
+### Run with Docker Compose
 
 ```bash
 docker compose up -d --build
 ```
 
-Il sito sara disponibile su [http://localhost:3000](http://localhost:3000).
+The site will be available at [http://localhost:3000](http://localhost:3000).
 
-### Stop dei container
+### Stop the containers
 
 ```bash
 docker compose down
 ```
 
-## Deploy
+## Deployment
 
-Il progetto puo essere pubblicato in due modi semplici:
+The project can be deployed in two straightforward ways:
 
 ### 1. Node.js server
 
@@ -159,13 +159,13 @@ npm run build
 npm run start
 ```
 
-### 2. Container Docker
+### 2. Docker container
 
-Usa il `Dockerfile` incluso. La build finale copia solo i file necessari a runtime grazie all'output standalone di Next.js.
+Use the included `Dockerfile`. The final image copies only the files required at runtime thanks to Next.js standalone output.
 
-## Qualita e verifica
+## Quality Checks
 
-Prima di aprire o aggiornare una PR:
+Before opening or updating a PR:
 
 ```bash
 npm run lint
@@ -173,14 +173,14 @@ npm run typecheck
 npm run build
 ```
 
-## Possibili estensioni
+## Possible Extensions
 
-- OG image dedicata per condivisioni WhatsApp e social
-- favicon personalizzata del matrimonio
-- RSVP o form conferma presenza
-- countdown alla data
-- gallery fotografica post-evento
+- custom OG image for WhatsApp and social sharing
+- custom wedding favicon
+- RSVP or attendance confirmation form
+- countdown to the event date
+- post-event photo gallery
 
-## Licenza
+## License
 
-Repository privato per uso interno.
+Private repository for internal use.
