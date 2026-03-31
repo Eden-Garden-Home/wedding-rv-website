@@ -1,0 +1,25 @@
+<svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="220" fill="#FBF6EE"/>
+  <g opacity="0.24">
+    <path d="M15 36C52 20 88 18 130 30C160 39 188 44 205 34" stroke="#C8B59A" stroke-width="0.8"/>
+    <path d="M6 92C41 84 78 78 116 84C152 90 182 106 214 100" stroke="#C7B39A" stroke-width="0.8"/>
+    <path d="M12 154C50 141 92 142 136 149C165 154 189 168 212 164" stroke="#C8B59A" stroke-width="0.8"/>
+  </g>
+  <g opacity="0.18" fill="#A98C68">
+    <circle cx="28" cy="28" r="1.2"/>
+    <circle cx="56" cy="64" r="0.9"/>
+    <circle cx="88" cy="38" r="1.1"/>
+    <circle cx="122" cy="72" r="0.9"/>
+    <circle cx="154" cy="46" r="1"/>
+    <circle cx="188" cy="82" r="1.1"/>
+    <circle cx="44" cy="118" r="1"/>
+    <circle cx="78" cy="138" r="1.2"/>
+    <circle cx="116" cy="120" r="1"/>
+    <circle cx="148" cy="150" r="0.8"/>
+    <circle cx="182" cy="128" r="1"/>
+    <circle cx="36" cy="178" r="0.9"/>
+    <circle cx="92" cy="186" r="1"/>
+    <circle cx="138" cy="190" r="1.2"/>
+    <circle cx="174" cy="176" r="0.9"/>
+  </g>
+</svg>
