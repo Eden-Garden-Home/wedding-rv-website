@@ -14,7 +14,6 @@ export type IntroContent = {
   sceneEyebrow: string;
   sceneTitle: string;
   sceneDescription: string;
-  skipLabel: string;
   closedHint: string;
   closedDescription: string;
   openHint: string;
@@ -143,7 +142,6 @@ export const siteContent = {
     sceneTitle: "Ogni storia che conta inizia con un gesto da aprire.",
     sceneDescription:
       "Abbiamo immaginato questo invito come si immagina un albero: con radici profonde, una crescita silenziosa e la luce che accompagna ogni nuova stagione.",
-    skipLabel: "Salta l'introduzione",
     closedHint: "Tocca la lettera",
     closedDescription:
       "Un invito da aprire con calma, pensato per accompagnarti nel nostro giorno.",

@@ -1,22 +1,101 @@
-<svg width="620" height="720" viewBox="0 0 620 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g opacity="0.72" stroke="#8B7A67" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M312 702C304 622 308 566 328 506C354 424 410 362 490 302" stroke-width="1.3"/>
-    <path d="M328 506C286 478 258 442 244 390C224 318 234 246 270 182" stroke-width="1"/>
-    <path d="M362 446C426 436 474 412 520 366C562 324 586 278 598 232" stroke-width="1"/>
-    <path d="M274 232C230 228 192 214 150 182C114 154 90 122 76 82" stroke-width="1"/>
-    <path d="M376 356C430 344 470 312 506 264" stroke-width="0.9"/>
-    <path d="M256 334C222 308 202 274 192 230" stroke-width="0.9"/>
-    <path d="M344 564C376 586 396 614 406 650" stroke-width="0.9"/>
-    <path d="M294 590C254 612 224 640 204 678" stroke-width="0.9"/>
+<svg width="760" height="960" viewBox="0 0 760 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="branch-main" x1="84" y1="888" x2="618" y2="126" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7A6554"/>
+      <stop offset="0.48" stop-color="#9A826D"/>
+      <stop offset="1" stop-color="#C5AF95"/>
+    </linearGradient>
+    <linearGradient id="branch-soft" x1="118" y1="854" x2="606" y2="174" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A98D72" stop-opacity="0.2"/>
+      <stop offset="0.58" stop-color="#DCC7AC" stop-opacity="0.68"/>
+      <stop offset="1" stop-color="#F0E0CB" stop-opacity="0.12"/>
+    </linearGradient>
+    <radialGradient id="leaf-fill" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0.35 0.32) scale(1 0.92)">
+      <stop offset="0" stop-color="#E5D7C4" stop-opacity="0.92"/>
+      <stop offset="0.55" stop-color="#A99077" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#75614F" stop-opacity="0.18"/>
+    </radialGradient>
+    <radialGradient id="sage-fill" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0.32 0.28) scale(1 0.94)">
+      <stop offset="0" stop-color="#DDE4D6" stop-opacity="0.78"/>
+      <stop offset="0.58" stop-color="#8B9A7E" stop-opacity="0.48"/>
+      <stop offset="1" stop-color="#55624D" stop-opacity="0.12"/>
+    </radialGradient>
+    <filter id="bloom" x="-18%" y="-18%" width="136%" height="136%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="5.2"/>
+    </filter>
+  </defs>
+
+  <g opacity="0.28" filter="url(#bloom)">
+    <path d="M354 936C336 826 338 738 372 642C418 512 500 408 624 304" stroke="#D6C3A8" stroke-width="22" stroke-linecap="round"/>
+    <path d="M274 906C228 816 204 738 198 658C192 556 220 464 286 364" stroke="#C8B394" stroke-width="16" stroke-linecap="round"/>
+    <path d="M470 754C564 714 632 660 690 582" stroke="#D8C4AB" stroke-width="12" stroke-linecap="round"/>
   </g>
-  <g fill="#A88B67" opacity="0.28">
-    <ellipse cx="146" cy="180" rx="16" ry="7" transform="rotate(-18 146 180)"/>
-    <ellipse cx="194" cy="224" rx="14" ry="6.2" transform="rotate(-32 194 224)"/>
-    <ellipse cx="276" cy="184" rx="15" ry="6.8" transform="rotate(-56 276 184)"/>
-    <ellipse cx="356" cy="352" rx="16" ry="6.2" transform="rotate(-20 356 352)"/>
-    <ellipse cx="514" cy="264" rx="16" ry="6.8" transform="rotate(18 514 264)"/>
-    <ellipse cx="526" cy="366" rx="15" ry="6.2" transform="rotate(-8 526 366)"/>
-    <ellipse cx="398" cy="646" rx="15" ry="6.2" transform="rotate(26 398 646)"/>
-    <ellipse cx="214" cy="676" rx="15" ry="6.2" transform="rotate(-32 214 676)"/>
+
+  <g opacity="0.74" stroke="url(#branch-main)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M356 936C338 822 340 732 374 634C424 492 510 386 640 274" stroke-width="2.2"/>
+    <path d="M374 634C316 596 274 544 246 470C214 380 216 286 260 174" stroke-width="1.6"/>
+    <path d="M432 522C520 512 586 478 650 418C704 366 736 306 746 244" stroke-width="1.55"/>
+    <path d="M270 310C214 304 166 284 112 242C66 206 36 162 18 110" stroke-width="1.45"/>
+    <path d="M302 690C260 738 236 790 226 846" stroke-width="1.25"/>
+    <path d="M414 742C466 774 500 824 516 888" stroke-width="1.2"/>
+    <path d="M244 470C206 444 178 404 162 354" stroke-width="1.15"/>
+    <path d="M222 424C176 420 140 404 102 372C70 344 48 312 34 270" stroke-width="1.05"/>
+    <path d="M410 572C468 600 510 642 544 694" stroke-width="1.08"/>
+    <path d="M462 492C530 474 584 438 634 382" stroke-width="1.05"/>
+    <path d="M546 392C606 382 654 352 702 304" stroke-width="0.98"/>
+    <path d="M276 238C246 194 228 146 222 88" stroke-width="1"/>
+    <path d="M330 190C380 168 420 132 460 82" stroke-width="0.96"/>
+    <path d="M520 324C560 284 584 236 600 176" stroke-width="0.94"/>
+    <path d="M618 284C670 260 710 224 746 176" stroke-width="0.88"/>
+    <path d="M156 250C118 222 88 188 62 142" stroke-width="0.92"/>
+    <path d="M520 834C560 864 586 904 602 950" stroke-width="0.88"/>
+    <path d="M236 824C196 842 164 874 136 920" stroke-width="0.86"/>
+    <path d="M392 396C430 360 454 318 470 266" stroke-width="0.92"/>
+    <path d="M338 430C306 388 288 346 282 296" stroke-width="0.88"/>
+  </g>
+
+  <g opacity="0.58" stroke="url(#branch-soft)" stroke-linecap="round">
+    <path d="M354 936C336 822 338 732 372 634C422 492 510 386 640 274" stroke-width="4.4"/>
+    <path d="M374 634C316 596 274 544 246 470C214 380 216 286 260 174" stroke-width="3.1"/>
+    <path d="M432 522C520 512 586 478 650 418C704 366 736 306 746 244" stroke-width="2.7"/>
+    <path d="M270 310C214 304 166 284 112 242C66 206 36 162 18 110" stroke-width="2.4"/>
+  </g>
+
+  <g opacity="0.42" fill="url(#leaf-fill)">
+    <ellipse cx="104" cy="240" rx="18" ry="7.4" transform="rotate(-18 104 240)"/>
+    <ellipse cx="150" cy="274" rx="16" ry="6.8" transform="rotate(-34 150 274)"/>
+    <ellipse cx="180" cy="404" rx="17" ry="6.8" transform="rotate(-18 180 404)"/>
+    <ellipse cx="212" cy="348" rx="18" ry="7.2" transform="rotate(-46 212 348)"/>
+    <ellipse cx="250" cy="176" rx="20" ry="7.8" transform="rotate(-58 250 176)"/>
+    <ellipse cx="334" cy="188" rx="18" ry="7.2" transform="rotate(-22 334 188)"/>
+    <ellipse cx="402" cy="392" rx="18" ry="7.2" transform="rotate(-16 402 392)"/>
+    <ellipse cx="446" cy="266" rx="17" ry="6.8" transform="rotate(-30 446 266)"/>
+    <ellipse cx="540" cy="690" rx="20" ry="7.8" transform="rotate(18 540 690)"/>
+    <ellipse cx="594" cy="380" rx="18" ry="7.2" transform="rotate(10 594 380)"/>
+    <ellipse cx="660" cy="420" rx="18" ry="7.2" transform="rotate(-6 660 420)"/>
+    <ellipse cx="700" cy="302" rx="17" ry="6.8" transform="rotate(-18 700 302)"/>
+    <ellipse cx="512" cy="884" rx="18" ry="7" transform="rotate(28 512 884)"/>
+    <ellipse cx="228" cy="844" rx="18" ry="7" transform="rotate(-28 228 844)"/>
+    <ellipse cx="618" cy="946" rx="16" ry="6.4" transform="rotate(34 618 946)"/>
+  </g>
+
+  <g opacity="0.28" fill="url(#sage-fill)">
+    <ellipse cx="76" cy="146" rx="15" ry="6.2" transform="rotate(-34 76 146)"/>
+    <ellipse cx="140" cy="370" rx="14" ry="5.8" transform="rotate(-10 140 370)"/>
+    <ellipse cx="286" cy="84" rx="14" ry="5.6" transform="rotate(-42 286 84)"/>
+    <ellipse cx="478" cy="84" rx="14" ry="5.8" transform="rotate(-26 478 84)"/>
+    <ellipse cx="574" cy="174" rx="14" ry="5.8" transform="rotate(12 574 174)"/>
+    <ellipse cx="650" cy="176" rx="14" ry="5.6" transform="rotate(-18 650 176)"/>
+    <ellipse cx="486" cy="826" rx="14" ry="5.8" transform="rotate(24 486 826)"/>
+    <ellipse cx="142" cy="920" rx="14" ry="5.8" transform="rotate(-38 142 920)"/>
+  </g>
+
+  <g opacity="0.22" fill="#D6C4AE">
+    <circle cx="228" cy="240" r="3.2"/>
+    <circle cx="308" cy="434" r="2.8"/>
+    <circle cx="520" cy="542" r="3.4"/>
+    <circle cx="610" cy="286" r="2.8"/>
+    <circle cx="260" cy="760" r="3"/>
+    <circle cx="476" cy="914" r="2.8"/>
   </g>
 </svg>
