@@ -1,0 +1,27 @@
+param([string]$Capture, [int]$Panel = 1, [string]$Output)
+Add-Type -AssemblyName System.Drawing
+$referencePath = 'C:\Users\eddaj\.codex\generated_images\01a020b2-aba9-7293-9f45-6e9689badc3c\exec-eba18db5-f0d8-4c13-8a57-c887107fb9f0.png'
+$referenceImage = [System.Drawing.Image]::FromFile($referencePath)
+$captureImage = [System.Drawing.Image]::FromFile($Capture)
+$comparison = [System.Drawing.Bitmap]::new(810, 884)
+$graphics = [System.Drawing.Graphics]::FromImage($comparison)
+$graphics.Clear([System.Drawing.Color]::White)
+$graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$font = [System.Drawing.Font]::new('Arial', 11)
+$graphics.DrawString('PROPOSTA 3', $font, [System.Drawing.Brushes]::Black, 3, 7)
+$graphics.DrawString('SITO · 393 × 852 CSS px', $font, [System.Drawing.Brushes]::Black, 414, 7)
+$sourceX = @(18, 507, 997)[$Panel]
+$graphics.DrawImage($referenceImage, [System.Drawing.Rectangle]::new(0,32,393,821), [System.Drawing.Rectangle]::new($sourceX,55,472,986), [System.Drawing.GraphicsUnit]::Pixel)
+$graphics.DrawImage($captureImage, [System.Drawing.Rectangle]::new(414,32,393,852), [System.Drawing.Rectangle]::new(870,147,393,852), [System.Drawing.GraphicsUnit]::Pixel)
+$comparison.Save($Output, [System.Drawing.Imaging.ImageFormat]::Png)
+$screen = [System.Drawing.Bitmap]::new(393,852)
+$screenGraphics = [System.Drawing.Graphics]::FromImage($screen)
+$screenGraphics.DrawImage($captureImage, [System.Drawing.Rectangle]::new(0,0,393,852), [System.Drawing.Rectangle]::new(870,147,393,852), [System.Drawing.GraphicsUnit]::Pixel)
+$screen.Save(($Output -replace '\.png$', '-screen.png'), [System.Drawing.Imaging.ImageFormat]::Png)
+$screenGraphics.Dispose()
+$screen.Dispose()
+$font.Dispose()
+$graphics.Dispose()
+$comparison.Dispose()
+$referenceImage.Dispose()
+$captureImage.Dispose()

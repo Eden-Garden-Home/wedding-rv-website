@@ -4,6 +4,12 @@
 
 ### Wedding prototype decisions
 
+- Current visual source (12 September 2026): option 3, **Sotto gli alberi**, the third displayed generated mock `exec-eba18db5-f0d8-4c13-8a57-c887107fb9f0.png`. This choice supersedes the older collage-first composition below. Keep one continuous ivory paper with narrow dusty-pink edges, small embossed pink top corners, Cherolina names above the real church/video/lights collage, and fine olive tree etchings at the margins.
+- The selected direction uses a numbered editorial program (01/02/03), direct Maps links, expandable address details, a simple wedding-list disclosure, and one rectangular green RSVP action. Avoid generic rounded cards, section icons, visible stars, heavy glow effects, and repeated large name blocks.
+- Preserve the accepted simple intro reveal; it now dissolves directly from the closed envelope into the live invitation so there is no duplicate open-envelope image or second landing. The historical 3D requirement below is superseded by the later accepted simplified reveal. Keep the live status bar and home indicator above the intro, and the underlying invitation inert until the reveal completes.
+- Generated v3 artwork is served as optimized WebP; supplied church, Fondaco video, lights photo and Cherolina remain the real project assets. RSVP is still a local preview (clearly labeled after a selection); IBAN remains blank. Do not imply answers have been sent or invent banking details. No new deployment is requested.
+- Section navigation must scroll only the nearest `.mobile-scroll` using its own `scrollTo`, accounting for the preview scale. Do not call `scrollIntoView` on page sections: it also scrolls the overflow-hidden device frame and can reveal the off-screen keyboard artwork. Pixel hero height is 904px (952px screen minus the protected 48px navigation region), while iPhone is 852px.
+
 - Visual source: the cream minimal torn-paper collage selected by the user.
 - Keep the church photo in the upper-left, the supplied Fondaco video in the upper-right, and the warm dancing-lights image below.
 - Maintain generous cream space between the collage and the `Valentina e Riccardo` name block.
