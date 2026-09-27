@@ -1,9 +1,57 @@
 services:
-  wedding-site:
-    build: .
-    image: wedding-rv-website:local
+  wedding-api:
+    build:
+      context: .
+      target: api
+    image: wedding-rv-api:local
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8080:8080"
+    environment:
+      WEDDING_DB_PATH: /data/wedding.sqlite
+      WEDDING_PUBLIC_URL: https://valentinaericcardo.world
+      WEDDING_ADMIN_ORIGIN: https://admin.valentinaericcardo.world
+      WEDDING_ADMIN_PASSWORD_HASH: ${WEDDING_ADMIN_PASSWORD_HASH:?Set WEDDING_ADMIN_PASSWORD_HASH in the server .env file}
+    volumes:
+      - wedding-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/healthz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     security_opt:
       - no-new-privileges:true
+
+  wedding-site:
+    build:
+      context: .
+      target: web
+    image: wedding-rv-website:local
+    restart: unless-stopped
+    depends_on:
+      wedding-api:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8081:8081"
+    security_opt:
+      - no-new-privileges:true
+
+  wedding-backup:
+    image: wedding-rv-api:local
+    restart: unless-stopped
+    command: ["node", "server/backup-loop.mjs"]
+    depends_on:
+      wedding-api:
+        condition: service_healthy
+    environment:
+      WEDDING_DB_PATH: /data/wedding.sqlite
+      WEDDING_BACKUP_DIR: /backups
+    volumes:
+      - wedding-data:/data
+      - wedding-backups:/backups
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  wedding-data:
+  wedding-backups:

@@ -1,4 +1,5 @@
 :root {
+  --wedding-text-font: "Cutive Mono", "Courier New", monospace;
   --wedding-cream: #f8f3e8;
   --wedding-green: #293e30;
   --wedding-sage: #87907b;
@@ -25,7 +26,7 @@
   background: var(--wedding-cream) url("/assets/wedding/paper-texture.png") repeat;
   background-size: 390px auto;
   border-inline: 12px solid var(--wedding-rose);
-  font: 500 19px/1.35 "Cormorant Garamond", Georgia, serif;
+  font: 400 17px/1.5 var(--wedding-text-font);
   -webkit-font-smoothing: antialiased;
 }
 .wedding-page *, .invitation-loader * { box-sizing: border-box; }
@@ -47,7 +48,9 @@
 .envelope-closed { width: 100%; height: 100%; object-fit: cover; }
 .seal-trigger { position: absolute; top: 50%; left: 50%; width: 142px; height: 142px; padding: 0; transform: translate(-50%, -50%); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
 .seal-trigger:disabled { visibility: hidden; }
-.loader-hint { position: absolute; top: calc(50% + 98px); right: 0; left: 0; margin: 0; font: 500 20px/1.2 "Cormorant Garamond", serif; text-align: center; animation: seal-hint-pulse 2.2s ease-in-out infinite; }
+.loader-caption { position: absolute; top: calc(50% + 98px); right: 18px; left: 18px; text-align: center; }
+.loader-recipient { margin: 0 0 12px; color: #425044; font: 400 15px/1.4 var(--wedding-text-font); text-wrap: balance; }
+.loader-hint { margin: 0; font: 400 16px/1.35 var(--wedding-text-font); animation: seal-hint-pulse 2.2s ease-in-out infinite; }
 @keyframes envelope-release { 0% { opacity: 1; } 30% { opacity: .96; } 100% { opacity: 0; transform: translateY(-12px) scale(1.025); } }
 @keyframes seal-hint-pulse { 0%, 100% { opacity: .34; } 50% { opacity: 1; } }
 
@@ -61,17 +64,17 @@
 .hero-menu-button { position: absolute; top: 54px; left: 5px; z-index: 5; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; background: transparent; border: 0; }
 .hero-menu-button svg { width: 19px; height: 19px; }
 .hero-copy { position: relative; z-index: 2; padding: 132px 20px 0; text-align: center; }
-.eyebrow { font: 500 9px/1.4 "DM Sans", sans-serif; text-transform: uppercase; letter-spacing: .3em; }
+.eyebrow { font: 400 10px/1.5 var(--wedding-text-font); text-transform: uppercase; letter-spacing: .13em; }
 .eyebrow::after { display: block; width: 26px; height: 1px; margin-top: 16px; background: var(--wedding-sage); content: ""; }
 .hero-copy .eyebrow::after { margin-inline: auto; }
 .signature { display: flex; flex-direction: column; align-items: center; font: 400 86px/.79 "Cherolina", cursive; }
 .signature span { display: block; white-space: nowrap; }
 .signature span + span { margin-top: 6px; }
 .hero-copy h1 { margin: 24px -12px 22px; }
-.wedding-date { font-size: 20px; line-height: 1.4; letter-spacing: .035em; }
+.wedding-date { font-size: 18px; line-height: 1.5; letter-spacing: 0; }
 .wedding-date time, .wedding-date span { display: block; }
-.wedding-date time { font-size: 22px; }
-.wedding-date span { font-size: 18px; letter-spacing: .025em; }
+.wedding-date time { font-size: 19px; }
+.wedding-date span { font-size: 16px; letter-spacing: 0; }
 .gold-points { position: absolute; z-index: 1; width: 45px; height: 200px; object-fit: cover; mix-blend-mode: multiply; opacity: .7; pointer-events: none; animation: points-breathe 5.4s ease-in-out infinite alternate; }
 .points-hero-left { top: 342px; left: 0; }
 .points-hero-right { bottom: 40px; right: 0; animation-delay: -2.8s; }
@@ -94,7 +97,7 @@
 .section-heading, .day-timeline { position: relative; z-index: 2; }
 .points-program { bottom: 12px; left: -3px; animation-delay: -1.3s; }
 .day-timeline { position: relative; padding: 0; margin: 42px 16px 0 0; list-style: none; }
-.timeline-route { position: absolute; top: 9px; bottom: 8px; left: 0; width: 62px; height: calc(100% - 17px); overflow: visible; pointer-events: none; }
+.timeline-route { position: absolute; top: 0; left: 0; width: 62px; height: 100%; overflow: visible; pointer-events: none; }
 .timeline-route path { fill: none; stroke: color-mix(in srgb, var(--wedding-sage) 72%, transparent); stroke-width: 1.35; stroke-linecap: round; stroke-dasharray: 2.5 5; vector-effect: non-scaling-stroke; }
 .day-timeline li { position: relative; display: grid; grid-template-columns: 61px minmax(0, 1fr); gap: 17px; padding: 22px 0; border-bottom: 1px solid var(--wedding-hairline); }
 .day-timeline li:first-of-type { padding-top: 4px; }
@@ -103,42 +106,77 @@
 .day-timeline li:nth-of-type(1) .timeline-stop { margin-left: 24px; }
 .day-timeline li:nth-of-type(2) .timeline-stop { margin-left: 12px; }
 .day-timeline li:nth-of-type(3) .timeline-stop { margin-left: 29px; }
-.day-timeline h3 { font-size: 26px; line-height: 1.18; letter-spacing: -.02em; }
+.day-timeline h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.03em; }
 .day-timeline h3 > * { display: block; }
-.day-timeline p { margin-top: 8px; font-size: 18.5px; line-height: 1.28; }
-.text-link { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 5px 0; border: 0; background: transparent; font: inherit; font-size: 18px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; cursor: pointer; }
+.day-timeline p { margin-top: 8px; font-size: 16px; line-height: 1.45; }
+.text-link { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 5px 0; border: 0; background: transparent; font: inherit; font-size: 15px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; cursor: pointer; }
 .text-link svg { width: 16px; height: 16px; flex: 0 0 auto; }
 .day-timeline .text-link { margin-top: 2px; }
 .places-section { position: relative; padding: 0 36px 0; }
 .location-details { border-block: 1px solid var(--wedding-hairline); }
 .wedding-page summary { cursor: pointer; list-style: none; }
 .wedding-page summary::-webkit-details-marker { display: none; }
-.location-details > summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 62px; font-size: 18px; }
+.location-details > summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 62px; font-size: 15px; }
 .location-details > summary svg { width: 17px; height: 17px; transition: transform .2s; }
 .location-details[open] > summary svg { transform: rotate(180deg); }
 .place-list { padding: 0 0 24px; }
 .place-list article + article { margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--wedding-hairline); }
-.place-list h3 { font-size: 24px; line-height: 1.15; }
-.place-list p { margin-top: 8px; font-size: 18px; }
+.place-list h3 { font-size: 21px; line-height: 1.3; }
+.place-list p { margin-top: 8px; font-size: 16px; }
 
-.invitation-closing { position: relative; padding: 84px 56px 75px; }
+.surprise-section { position: relative; margin: 72px 36px 0; padding: 39px 20px 38px; border-block: 1px solid var(--wedding-hairline); }
+.surprise-section::before { position: absolute; top: -2px; left: 20px; width: 42px; height: 3px; background: var(--wedding-rose); content: ""; }
+.surprise-section h2 { margin-top: 5px; font: 400 32px/1.15 var(--wedding-text-font); letter-spacing: -.04em; }
+.surprise-copy { margin-top: 19px !important; font-size: 16px; line-height: 1.5; }
+.surprise-contact { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--wedding-hairline); }
+.surprise-contact-name { margin-top: 7px !important; font-size: 24px; line-height: 1.3; }
+.surprise-contact-number { margin-top: 5px !important; color: var(--wedding-muted); font: 400 12px/1.45 var(--wedding-text-font); letter-spacing: 0; }
+.surprise-whatsapp { display: flex; align-items: center; gap: 11px; width: 100%; min-height: 58px; margin-top: 20px; padding: 11px 13px; border: 1px solid var(--wedding-green); border-radius: 0; background: rgb(255 250 240 / .42); color: var(--wedding-green); font: 400 12px/1.4 var(--wedding-text-font); text-decoration: none; transition: background .2s; }
+.surprise-whatsapp:hover { background: rgb(255 250 240 / .85); }
+.surprise-whatsapp svg:first-child { width: 27px; height: 27px; flex: 0 0 auto; }
+.surprise-whatsapp svg:last-child { width: 17px; height: 17px; flex: 0 0 auto; margin-left: auto; }
+.surprise-whatsapp-pending { opacity: .62; }
+
+.invitation-closing { position: relative; padding: 64px 42px 75px; }
 .gift-section, .final-rsvp, .invitation-footer { position: relative; z-index: 2; }
-.gift-section h2 { margin-top: 21px; font: 400 35px/1.08 "Inter Variable", Arial, sans-serif; letter-spacing: -.035em; }
-.gift-copy { margin-top: 17px !important; font-size: 19px; line-height: 1.3; }
-.gift-details { margin-top: 2px; }
-.gift-details summary { display: inline-block; min-height: 44px; }
-.gift-details .text-link { font-size: 19px; }
-.iban-details { padding: 20px 0 6px; }
-.iban-details p { margin-bottom: 15px; }
-.small-label { color: var(--wedding-muted); font: 500 10px/1.5 "DM Sans", sans-serif; letter-spacing: .08em; text-transform: uppercase; }
-.iban-value { display: block; margin-block: 12px; font: 500 13px/1.7 "DM Sans", sans-serif; overflow-wrap: anywhere; user-select: all; }
-.final-rsvp { margin-top: 30px; padding-top: 37px; border-top: 1px solid var(--wedding-hairline); text-align: center; }
-.final-rsvp h2 { font-size: 70px; line-height: 1.05; letter-spacing: -.04em; }
-.final-rsvp > p { margin: 13px -8px 0; font-size: 18px; line-height: 1.35; }
-.final-rsvp > .rsvp-availability { margin-top: 12px; color: var(--wedding-muted); font: 500 12px/1.5 "DM Sans", sans-serif; }
+.gift-section h2 { margin-top: 21px; font: 400 26px/1.25 var(--wedding-text-font); letter-spacing: -.04em; }
+.gift-section > h2 { margin-top: 0; }
+.gift-copy { margin-top: 17px !important; font-size: 16px; line-height: 1.5; }
+.gift-choices { display: grid; gap: 12px; margin-top: 28px; }
+.gift-choice { display: flex; flex-direction: column; width: 100%; min-height: 150px; padding: 18px 18px 14px; border: 1px solid var(--wedding-hairline); border-radius: 0; background: rgb(255 250 240 / .45); text-align: left; transition: background .2s, border-color .2s; }
+.gift-choice:hover, .gift-choice:focus-visible { border-color: var(--wedding-green); background: rgb(255 250 240 / .82); }
+.gift-choice-action, .gift-back, .registry-number, .registry-note { font-family: var(--wedding-text-font); }
+.gift-choice strong { display: block; margin-top: 2px; font: 400 23px/1.25 var(--wedding-text-font); letter-spacing: -.035em; }
+.gift-choice-description { display: block; margin-top: 6px; font-size: 15px; line-height: 1.4; }
+.gift-choice-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-top: auto; padding-top: 14px; font-size: 10px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+.gift-choice-action svg { width: 17px; height: 17px; }
+.gift-detail { padding-bottom: 8px; }
+.gift-back { min-height: 44px; padding: 0; border: 0; background: transparent; font-size: 11px !important; text-decoration: underline; text-underline-offset: 5px; }
+.gift-detail > .eyebrow { margin-top: 26px; }
+.gift-section h2:focus { outline: none; }
+.bank-coordinates { margin-top: 30px; padding: 22px 0; border-block: 1px solid var(--wedding-hairline); }
+.bank-pending { margin-top: 14px !important; font-size: 30px; line-height: 1.1; }
+.bank-pending span { display: block; margin-top: 12px; color: var(--wedding-muted); font: 400 12px/1.5 var(--wedding-text-font); }
+.bank-coordinates .text-link { margin-top: 6px; }
+.bank-coordinates [role="alert"] { margin-top: 10px; font-size: 16px; }
+.registry-note { margin-top: 18px !important; color: var(--wedding-muted); font-size: 11px; line-height: 1.5; }
+.registry-list { padding: 0; margin: 29px 0 0; list-style: none; }
+.registry-list li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 13px; padding: 19px 0; border-top: 1px solid var(--wedding-hairline); }
+.registry-list li:last-child { border-bottom: 1px solid var(--wedding-hairline); }
+.registry-number { padding-top: 5px; color: var(--wedding-muted); font-size: 10px; letter-spacing: .08em; }
+.registry-list h3 { font-size: 21px; line-height: 1.25; letter-spacing: -.03em; }
+.registry-list p { margin-top: 6px; font-size: 15px; line-height: 1.45; }
+.registry-list .text-link { margin-top: 7px; font-size: 16px; }
+.small-label { color: var(--wedding-muted); font: 400 10px/1.5 var(--wedding-text-font); letter-spacing: .08em; text-transform: uppercase; }
+.iban-value { display: block; margin-block: 12px; font: 400 13px/1.7 var(--wedding-text-font); overflow-wrap: anywhere; user-select: all; }
+.final-rsvp { margin-top: 48px; padding-top: 37px; border-top: 1px solid var(--wedding-hairline); text-align: center; }
+.final-rsvp h2 { font-size: 38px; line-height: 1.2; letter-spacing: -.05em; }
+.final-rsvp > p { margin: 13px -8px 0; font-size: 15px; line-height: 1.5; }
+.rsvp-preview-note { margin: 0 0 16px !important; color: var(--wedding-muted); font-size: 12px !important; line-height: 1.5 !important; }
 .primary-action { display: block; width: 100%; min-height: 56px; padding: 12px 14px; color: var(--wedding-white) !important; background: #42523e; border: 1px solid #42523e; border-radius: 2px; font-size: 22px !important; line-height: 1.2 !important; transition: background .2s; }
 .primary-action:hover { background: #344531; }
 .primary-action:active { background: #293b29; }
+.primary-action:disabled { opacity: .55; cursor: not-allowed; }
 .final-rsvp > .primary-action, .inline-rsvp-actions { margin-top: 27px; }
 .final-rsvp > .primary-action, .inline-rsvp-actions { width: calc(100% + 16px); margin-inline: -8px; }
 .secondary-action { width: 100%; min-height: 48px; margin-top: 8px; padding: 8px; background: transparent; border: 0; text-decoration: underline; text-underline-offset: 5px; font-size: 18px !important; }
@@ -146,13 +184,32 @@
 .inline-confirmation > svg { display: block; width: 26px; height: 26px; margin: 0 auto 15px; color: var(--wedding-muted); }
 .inline-confirmation h3 { font-size: 29px; }
 .inline-confirmation p { margin-top: 8px; font-size: 18px; }
-.inline-confirmation .prototype-note { margin: 17px 10px 6px; color: var(--wedding-muted); font: 400 11px/1.5 "DM Sans", sans-serif; }
+.inline-confirmation .prototype-note { margin: 17px 10px 6px; color: var(--wedding-muted); font: 400 11px/1.5 var(--wedding-text-font); }
+.rsvp-ready { margin-top: 22px; }
+.rsvp-ready > .primary-action { margin-top: 20px; }
+.rsvp-form { margin-top: 26px; text-align: left; }
+.rsvp-intro { margin-bottom: 20px !important; color: var(--wedding-muted); font-size: 13px !important; line-height: 1.5 !important; }
+.rsvp-person { padding: 19px 0; border-top: 1px solid var(--wedding-hairline); }
+.rsvp-person > p { font-size: 16px; line-height: 1.45; }
+.rsvp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; }
+.rsvp-options button { min-height: 44px; padding: 8px 7px; border: 1px solid var(--wedding-hairline); background: rgb(255 250 240 / .45); color: var(--wedding-green); font-size: 12px; line-height: 1.35; }
+.rsvp-options button.selected { border-color: var(--wedding-green); background: #e1e8da; }
+.rsvp-form > .primary-action { margin-top: 15px; font-size: 16px !important; }
+.rsvp-form > .secondary-action { font-size: 13px !important; }
+.rsvp-error { margin: 14px 0 0 !important; color: #a33b34; font-size: 12px !important; }
+.rsvp-success { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--wedding-green); font-size: 14px !important; }
+.rsvp-success svg { width: 19px; height: 19px; }
+.rsvp-existing { margin-top: 14px !important; color: var(--wedding-muted); font-size: 12px !important; line-height: 1.5 !important; }
+.rsvp-unavailable { margin-top: 23px !important; color: var(--wedding-muted); font-size: 13px !important; line-height: 1.5 !important; }
+.privacy-note { margin-top: 32px; color: var(--wedding-muted); text-align: center; }
+.privacy-note summary { padding: 10px 0; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.privacy-note p { margin-top: 8px !important; font-size: 11px; line-height: 1.5; text-align: left; }
 .invitation-footer { margin-top: 70px; padding-bottom: 2px; }
 .invitation-footer .signature { font-size: 48px; line-height: .76; }
 .points-closing-left { bottom: 20px; left: -2px; animation-delay: -2s; }
 .points-closing-right { bottom: 116px; right: -3px; animation-delay: -4.4s; }
 .sheet-menu { padding: 4px 6px 20px; color: var(--wedding-green); }
-.sheet-menu button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 55px; padding: 12px 0; background: transparent; border: 0; border-bottom: 1px solid var(--wedding-hairline); color: inherit; font: 500 25px/1.2 "Cormorant Garamond", serif; cursor: pointer; text-align: left; }
+.sheet-menu button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 55px; padding: 12px 0; background: transparent; border: 0; border-bottom: 1px solid var(--wedding-hairline); color: inherit; font: 400 20px/1.35 var(--wedding-text-font); cursor: pointer; text-align: left; }
 .sheet-menu svg { width: 18px; height: 18px; }
 
 /* Scale inside the protected device, never from the desktop canvas width. */
@@ -194,8 +251,9 @@
   .signature { font-size: 78px; }
   .day-section { padding-right: 32px; padding-left: 28px; }
   .places-section { padding-inline: 26px; }
-  .invitation-closing { padding-right: 38px; padding-left: 38px; }
-  .final-rsvp h2 { font-size: 62px; }
+  .surprise-section { margin-inline: 26px; padding-inline: 12px; }
+  .invitation-closing { padding-right: 30px; padding-left: 30px; }
+  .final-rsvp h2 { font-size: 33px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
