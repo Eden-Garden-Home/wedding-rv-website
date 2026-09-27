@@ -46,9 +46,9 @@
 .envelope-closed { width: 100%; height: 100%; object-fit: cover; }
 .seal-trigger { position: absolute; top: 50%; left: 50%; width: 142px; height: 142px; padding: 0; transform: translate(-50%, -50%); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
 .seal-trigger:disabled { visibility: hidden; }
-.loader-hint { position: absolute; top: calc(50% + 98px); right: 0; left: 0; margin: 0; font: 500 20px/1.2 "Cormorant Garamond", serif; text-align: center; }
-.loader-skip { position: absolute; top: 58px; right: 18px; min-height: 44px; padding: 0 12px; border: 0; background: transparent; color: var(--wedding-green); font: 400 11px "DM Sans", sans-serif; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.loader-hint { position: absolute; top: calc(50% + 98px); right: 0; left: 0; margin: 0; font: 500 20px/1.2 "Cormorant Garamond", serif; text-align: center; animation: seal-hint-pulse 2.2s ease-in-out infinite; }
 @keyframes envelope-release { 0% { opacity: 1; } 30% { opacity: .96; } 100% { opacity: 0; transform: translateY(-12px) scale(1.025); } }
+@keyframes seal-hint-pulse { 0%, 100% { opacity: .34; } 50% { opacity: 1; } }
 
 .invitation-hero {
   position: relative;
@@ -71,14 +71,10 @@
 .wedding-date time, .wedding-date span { display: block; }
 .wedding-date time { font-size: 22px; }
 .wedding-date span { font-size: 18px; letter-spacing: .025em; }
-.tree-detail { position: absolute; z-index: 0; pointer-events: none; mix-blend-mode: multiply; object-fit: fill; }
-.tree-hero { width: 290px; height: 310px; top: 0; right: -19px; opacity: .65; }
 .gold-points { position: absolute; z-index: 1; width: 45px; height: 200px; object-fit: cover; mix-blend-mode: multiply; opacity: .7; pointer-events: none; animation: points-breathe 5.4s ease-in-out infinite alternate; }
 .points-hero-left { top: 342px; left: 0; }
 .points-hero-right { bottom: 40px; right: 0; animation-delay: -2.8s; }
 .media-collage { position: relative; height: 338px; margin: 26px 0 0; }
-.branch-collage-left { bottom: -13px; left: -45px; width: 128px; height: 144px; opacity: .65; transform: rotate(26deg); }
-.branch-collage-top { top: 22px; right: 50px; width: 135px; height: 139px; opacity: .65; transform: rotate(-76deg); }
 .photo-print { position: absolute; padding: 6px; background: var(--wedding-white); box-shadow: 0 3px 8px rgb(74 56 36 / .15); }
 .photo-window { width: 100%; height: 100%; overflow: hidden; }
 .photo-window img, .photo-window video { width: 100%; height: 100%; object-fit: cover; }
@@ -95,14 +91,17 @@
 
 .day-section { position: relative; min-height: 823px; padding: 102px 49px 62px 38px; }
 .section-heading, .day-timeline { position: relative; z-index: 2; }
-.section-heading h2 { margin-top: 39px; font-size: 43px; line-height: 1.05; letter-spacing: -.03em; }
-.tree-program { inset: 0 -2px auto auto; width: 100%; height: calc(100% + 35px); opacity: .66; clip-path: inset(0 0 35px 0); }
 .points-program { bottom: 12px; left: -3px; animation-delay: -1.3s; }
-.day-timeline { padding: 0; margin: 30px 16px 0 0; list-style: none; }
-.day-timeline li { display: grid; grid-template-columns: 61px minmax(0, 1fr); gap: 17px; padding: 22px 0; border-bottom: 1px solid var(--wedding-hairline); }
-.day-timeline li:first-child { padding-top: 4px; }
+.day-timeline { position: relative; padding: 0; margin: 42px 16px 0 0; list-style: none; }
+.timeline-route { position: absolute; top: 9px; bottom: 8px; left: 0; width: 62px; height: calc(100% - 17px); overflow: visible; pointer-events: none; }
+.timeline-route path { fill: none; stroke: color-mix(in srgb, var(--wedding-sage) 72%, transparent); stroke-width: 1.35; stroke-linecap: round; stroke-dasharray: 2.5 5; vector-effect: non-scaling-stroke; }
+.day-timeline li { position: relative; display: grid; grid-template-columns: 61px minmax(0, 1fr); gap: 17px; padding: 22px 0; border-bottom: 1px solid var(--wedding-hairline); }
+.day-timeline li:first-of-type { padding-top: 4px; }
 .day-timeline li:last-child { border: 0; padding-bottom: 0; }
-.timeline-number { color: var(--wedding-sage); font-size: 49px; line-height: .95; font-variant-numeric: lining-nums; letter-spacing: -.055em; }
+.timeline-stop { position: relative; z-index: 1; align-self: start; justify-self: start; width: 13px; height: 13px; margin-top: 8px; border: 1.5px solid var(--wedding-sage); border-radius: 50%; background: var(--wedding-cream); box-shadow: 0 0 0 4px rgb(248 243 232 / .7); }
+.day-timeline li:nth-of-type(1) .timeline-stop { margin-left: 24px; }
+.day-timeline li:nth-of-type(2) .timeline-stop { margin-left: 12px; }
+.day-timeline li:nth-of-type(3) .timeline-stop { margin-left: 29px; }
 .day-timeline h3 { font-size: 26px; line-height: 1.18; letter-spacing: -.02em; }
 .day-timeline h3 > * { display: block; }
 .day-timeline p { margin-top: 8px; font-size: 18.5px; line-height: 1.28; }
@@ -123,7 +122,7 @@
 
 .invitation-closing { position: relative; padding: 84px 56px 75px; }
 .gift-section, .final-rsvp, .invitation-footer { position: relative; z-index: 2; }
-.gift-section h2 { margin-top: 21px; font-size: 40px; line-height: 1.08; letter-spacing: -.024em; }
+.gift-section h2 { margin-top: 21px; font: 400 35px/1.08 "Inter Variable", Arial, sans-serif; letter-spacing: -.035em; }
 .gift-copy { margin-top: 17px !important; font-size: 19px; line-height: 1.3; }
 .gift-details { margin-top: 2px; }
 .gift-details summary { display: inline-block; min-height: 44px; }
@@ -135,6 +134,7 @@
 .final-rsvp { margin-top: 30px; padding-top: 37px; border-top: 1px solid var(--wedding-hairline); text-align: center; }
 .final-rsvp h2 { font-size: 70px; line-height: 1.05; letter-spacing: -.04em; }
 .final-rsvp > p { margin: 13px -8px 0; font-size: 18px; line-height: 1.35; }
+.final-rsvp > .rsvp-availability { margin-top: 12px; color: var(--wedding-muted); font: 500 12px/1.5 "DM Sans", sans-serif; }
 .primary-action { display: block; width: 100%; min-height: 56px; padding: 12px 14px; color: var(--wedding-white) !important; background: #42523e; border: 1px solid #42523e; border-radius: 2px; font-size: 22px !important; line-height: 1.2 !important; transition: background .2s; }
 .primary-action:hover { background: #344531; }
 .primary-action:active { background: #293b29; }
@@ -148,7 +148,6 @@
 .inline-confirmation .prototype-note { margin: 17px 10px 6px; color: var(--wedding-muted); font: 400 11px/1.5 "DM Sans", sans-serif; }
 .invitation-footer { margin-top: 70px; padding-bottom: 2px; }
 .invitation-footer .signature { font-size: 48px; line-height: .76; }
-.tree-closing { right: -3px; bottom: 0; width: 100%; height: 720px; opacity: .6; mask-image: linear-gradient(to bottom, transparent 62%, black 85%); }
 .points-closing-left { bottom: 20px; left: -2px; animation-delay: -2s; }
 .points-closing-right { bottom: 116px; right: -3px; animation-delay: -4.4s; }
 .sheet-menu { padding: 4px 6px 20px; color: var(--wedding-green); }
@@ -162,6 +161,41 @@
 [data-device="pixel-10"] .church-photo { height: 221px; }
 [data-device="pixel-10"] .venue-photo { height: 168px; }
 [data-device="pixel-10"] .lights-photo { top: 202px; height: 159px; }
+
+/* On a real phone the invitation fills the browser; the device frame remains
+   the desktop preview only. Keep this override with the wedding UI so the
+   protected preview runtime can still be checked independently. */
+@media (max-width: 600px) {
+  html, body, #root { height: 100dvh; }
+  .phone-stage { display: block; padding: 0; }
+  .phone-scale-box { width: 100% !important; height: 100% !important; }
+  .phone-device { width: 100% !important; height: 100% !important; transform: none !important; }
+  .device-screen {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+    cursor: auto;
+    --device-safe-area-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  .device-screen, .device-screen * { cursor: revert !important; }
+  .phone-bezel, .device-menu-bar, .device-camera, .mobile-cursor,
+  .status-bar, .home-indicator-svg, .android-navigation-bar,
+  .keyboard-dock { display: none !important; }
+  .mobile-app-viewport[data-platform="android"][data-keyboard-visible="false"] { bottom: 0; }
+  .wedding-page { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .invitation-hero { min-height: max(760px, 100dvh) !important; }
+  .hero-copy { padding-top: 116px !important; }
+}
+
+@media (max-width: 370px) {
+  .signature { font-size: 78px; }
+  .day-section { padding-right: 32px; padding-left: 28px; }
+  .places-section { padding-inline: 26px; }
+  .invitation-closing { padding-right: 38px; padding-left: 38px; }
+  .final-rsvp h2 { font-size: 62px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .wedding-page *, .invitation-loader * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

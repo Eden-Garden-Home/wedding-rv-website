@@ -4,6 +4,7 @@ import "@fontsource/dm-sans/400.css";
 import "@fontsource/dm-sans/500.css";
 import "@fontsource/cormorant-garamond/500.css";
 import "@fontsource/cormorant-garamond/600.css";
+import "@fontsource-variable/inter";
 import { BottomSheet, MobileScroll } from "./mobile";
 
 const weddingIban = "";
@@ -20,9 +21,6 @@ const locations = {
   },
 };
 
-function TreeDetail({ className }: { className: string }) {
-  return <img className={"tree-detail " + className} src="/assets/wedding/tree-etching-v3.webp" alt="" aria-hidden="true" draggable="false" />;
-}
 function GoldPoints({ className }: { className: string }) {
   return <img className={"gold-points " + className} src="/assets/wedding/gold-points-v3.webp" alt="" aria-hidden="true" draggable="false" />;
 }
@@ -109,13 +107,11 @@ export default function Prototype() {
           <img className="envelope-closed" src="/assets/wedding/invitation-envelope-closed.webp" alt="Busta rosa con sigillo in ceralacca V e R" draggable="false" />
           <button type="button" className="seal-trigger" aria-label="Apri l'invito" autoFocus disabled={loaderPhase !== "closed"} onClick={() => setLoaderPhase("opening")} />
           {loaderPhase === "closed" && <p className="loader-hint">Tocca il sigillo</p>}
-          <button type="button" className="loader-skip" onClick={() => setLoaderPhase("hidden")}>Salta intro</button>
         </div>
       )}
       <MobileScroll className="app-screen wedding-scroll">
         <main className="wedding-page" aria-label="Matrimonio di Valentina e Riccardo" aria-hidden={loaderPhase !== "hidden"} inert={loaderPhase !== "hidden" ? true : undefined}>
           <section className="invitation-hero" aria-labelledby="couple-names">
-            <img className="tree-detail tree-hero" src="/assets/wedding/hero-branch-v3.webp" alt="" aria-hidden="true" draggable="false" />
             <GoldPoints className="points-hero-left" />
             <GoldPoints className="points-hero-right" />
             <button className="hero-menu-button" type="button" onClick={() => setSheet("menu")} aria-label="Apri il menu"><HamburgerMenuIcon /></button>
@@ -125,8 +121,6 @@ export default function Prototype() {
               <p className="wedding-date"><time dateTime="2027-05-22">22 maggio 2027</time><span>Segrate · ore 15:30</span></p>
             </header>
             <section className="media-collage" aria-label="La cerimonia e la festa">
-              <img className="tree-detail branch-collage-left" src="/assets/wedding/hero-branch-v3.webp" alt="" aria-hidden="true" draggable="false" />
-              <img className="tree-detail branch-collage-top" src="/assets/wedding/hero-branch-v3.webp" alt="" aria-hidden="true" draggable="false" />
               <figure className="photo-print church-photo"><div className="photo-window"><img src="/assets/wedding/church.png" alt="Il campanile della Chiesa di Santo Stefano a Segrate" draggable="false" /></div></figure>
               <figure className="photo-print venue-photo"><div className="photo-window"><video ref={videoRef} src="/assets/wedding/fondaco.mp4" aria-label="Atmosfera del Fondaco dei Mercanti" autoPlay={!reducedMotion && loaderPhase === "hidden"} muted loop playsInline preload="metadata" /></div></figure>
               <figure className="photo-print lights-photo"><div className="photo-window"><img src="/assets/wedding/dancing-lights.png" alt="Luci calde per festeggiare insieme" draggable="false" /></div></figure>
@@ -135,13 +129,13 @@ export default function Prototype() {
           </section>
 
           <section className="day-section" id="programma" aria-labelledby="programma-title">
-            <TreeDetail className="tree-program" />
             <GoldPoints className="points-program" />
-            <header className="section-heading"><p className="eyebrow">Il programma</p><h2 id="programma-title">Ci vediamo qui.</h2></header>
+            <header className="section-heading"><p id="programma-title" className="eyebrow">Il programma</p></header>
             <ol className="day-timeline">
-              <li><span className="timeline-number" aria-hidden="true">01</span><div><h3><time dateTime="2027-05-22T15:30:00+02:00">15:30</time><span>Il nostro sì</span></h3><p>Chiesa di Santo Stefano<br />Segrate</p><MapsLink place="church" /></div></li>
-              <li><span className="timeline-number" aria-hidden="true">02</span><div><h3><span>A seguire</span><span>Brindisi e cena</span></h3><p>Fondaco dei Mercanti</p><MapsLink place="venue" /></div></li>
-              <li><span className="timeline-number" aria-hidden="true">03</span><div><h3><span>Fino a tardi</span><span>Musica e festa</span></h3><p>Balliamo insieme<br />sotto le luci.</p></div></li>
+              <svg className="timeline-route" viewBox="0 0 62 600" preserveAspectRatio="none" aria-hidden="true"><path d="M30 0 C8 78 52 148 28 229 S10 374 35 464 S45 551 24 600" /></svg>
+              <li><span className="timeline-stop" aria-hidden="true" /><div><h3><time dateTime="2027-05-22T15:30:00+02:00">15:30</time><span>Il nostro sì</span></h3><p>Chiesa di Santo Stefano<br />Segrate</p><MapsLink place="church" /></div></li>
+              <li><span className="timeline-stop" aria-hidden="true" /><div><h3><span>A seguire</span><span>Brindisi e cena</span></h3><p>Fondaco dei Mercanti</p><MapsLink place="venue" /></div></li>
+              <li><span className="timeline-stop" aria-hidden="true" /><div><h3><span>Fino a tardi</span><span>Musica e festa</span></h3><p>Balliamo insieme<br />sotto le luci.</p></div></li>
             </ol>
           </section>
 
@@ -153,7 +147,6 @@ export default function Prototype() {
           </section>
 
           <div className="invitation-closing">
-            <TreeDetail className="tree-closing" />
             <GoldPoints className="points-closing-left" />
             <GoldPoints className="points-closing-right" />
             <section className="gift-section" id="lista-nozze" aria-labelledby="lista-nozze-title">
@@ -173,6 +166,7 @@ export default function Prototype() {
             <section className="final-rsvp" id="conferma" aria-labelledby="rsvp-title">
               <h2 id="rsvp-title">Ci sarete?</h2>
               <p>Fateci sapere se festeggerete con noi.</p>
+              <p className="rsvp-availability">Anteprima: la risposta non viene ancora inviata agli sposi.</p>
               {attendance ? <div className="inline-confirmation" role="status">
                 <CheckCircledIcon aria-hidden="true" />
                 <h3>{attendance === "yes" ? "Che bello, ci sarete!" : "Ci mancherete."}</h3>

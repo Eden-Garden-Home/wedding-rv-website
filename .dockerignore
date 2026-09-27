@@ -1,0 +1,13 @@
+.git
+node_modules
+dist
+test-results
+playwright-report
+audit
+audit-polish
+qa
+design-qa*
+implementation-*
+reference-*
+*.md
+!AGENTS.md
