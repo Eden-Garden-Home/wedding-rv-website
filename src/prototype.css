@@ -7,6 +7,7 @@
   --wedding-muted: #58634f;
   --wedding-hairline: rgb(73 86 63 / .32);
 }
+.device-screen { overflow: clip; }
 @font-face {
   font-family: "Cherolina";
   src: url("/assets/wedding/cherolina.ttf") format("truetype");
