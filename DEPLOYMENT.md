@@ -7,11 +7,14 @@ separato e serve soltanto per l'accesso amministrativo remoto.
 
 ## Build e aggiornamento
 
-Nella directory del repository sulla VM:
+Sulla VM i file del progetto sono in `/home/wedding-website-prod/wedding-site`.
+Trasferire la versione verificata dal repository ufficiale in questa directory,
+poi eseguire:
 
 ```sh
-docker compose up -d --build
-docker compose ps
+cd /home/wedding-website-prod/wedding-site
+sudo docker compose up -d --build
+sudo docker compose ps
 curl -fsS http://127.0.0.1:8080/healthz
 ```
 
