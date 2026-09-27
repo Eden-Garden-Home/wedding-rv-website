@@ -30,10 +30,15 @@ Configurare un tunnel Cloudflare per i due nomi pubblici:
 | `valentinaericcardo.world` | `http://127.0.0.1:8080` |
 | `www.valentinaericcardo.world` | `http://127.0.0.1:8080` |
 
-Installare `cloudflared` come servizio systemd sul server, con la credenziale
-del tunnel conservata fuori dal repository. Il dominio deve usare i nameserver
-assegnati da Cloudflare. Prima di cambiarli, verificare che gli eventuali
-record e-mail esistenti siano presenti nella zona Cloudflare.
+Il tunnel `wedding-rv-production` gira come servizio systemd sulla VM. Il token
+è conservato in `/etc/cloudflared/token` con permessi riservati a root, fuori
+dal repository. I nameserver del dominio sono `bryce.ns.cloudflare.com` e
+`desi.ns.cloudflare.com`. La zona Cloudflare contiene anche i record MX e SPF
+di inoltro e-mail.
+
+L'accesso SSH alla VM richiede una chiave pubblica autorizzata; l'accesso SSH
+con password è disabilitato. Tailscale è installato ma il servizio è disabilitato
+su richiesta degli sposi.
 
 ## Stato dei contenuti
 
