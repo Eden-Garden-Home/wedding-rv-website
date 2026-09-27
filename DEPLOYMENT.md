@@ -34,7 +34,8 @@ Il tunnel `wedding-rv-production` gira come servizio systemd sulla VM. Il token
 è conservato in `/etc/cloudflared/token` con permessi riservati a root, fuori
 dal repository. I nameserver del dominio sono `bryce.ns.cloudflare.com` e
 `desi.ns.cloudflare.com`. La zona Cloudflare contiene anche i record MX e SPF
-di inoltro e-mail.
+di inoltro e-mail. Il certificato Universal SSL è attivo e Cloudflare reindirizza
+HTTP a HTTPS.
 
 L'accesso SSH alla VM richiede una chiave pubblica autorizzata; l'accesso SSH
 con password è disabilitato. Tailscale è installato ma il servizio è disabilitato
