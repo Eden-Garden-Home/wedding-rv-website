@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowTopRightIcon, CheckCircledIcon, CheckIcon, ChevronDownIcon, CopyIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import "@fontsource/cutive-mono/400.css";
-import { BottomSheet, MobileScroll } from "./mobile";
-import { invitationCodeFromUrl, loadInvitation, recordEvent, submitRsvp, type Invitation } from "./inviteApi";
+import { BottomSheet, KeyboardTextarea, MobileScroll, useKeyboard } from "./mobile";
+import { invitationCodeFromUrl, loadInvitation, recordEvent, submitRsvp, type DietaryChoice, type Invitation, type RsvpResponse } from "./inviteApi";
 
 const weddingIban = "";
 const lucaWhatsappNumber = "+39 348 453 7261";
@@ -57,11 +57,13 @@ function Signature() {
 }
 
 export default function Prototype() {
+  const keyboard = useKeyboard();
   const [sheet, setSheet] = useState<"menu" | null>(null);
   const [rsvpOpen, setRsvpOpen] = useState(false);
   const [invitation, setInvitation] = useState<Invitation | null>(null);
   const [inviteState, setInviteState] = useState<"loading" | "ready" | "missing" | "unavailable" | "error">("loading");
   const [answers, setAnswers] = useState<Record<string, boolean | null>>({});
+  const [mealAnswers, setMealAnswers] = useState<Record<string, { choice: DietaryChoice; note: string; childMenu: boolean }>>({});
   const [rsvpSaving, setRsvpSaving] = useState(false);
   const [rsvpSaved, setRsvpSaved] = useState(false);
   const [rsvpError, setRsvpError] = useState("");
@@ -91,6 +93,7 @@ export default function Prototype() {
     loadInvitation(code, controller.signal).then((data) => {
       setInvitation(data);
       setAnswers(Object.fromEntries(data.guests.map((guest) => [guest.id, guest.attending])));
+      setMealAnswers(Object.fromEntries(data.guests.map((guest) => [guest.id, { choice: guest.dietaryChoice, note: guest.dietaryNote, childMenu: guest.childMenu }])));
       setInviteState("ready");
       recordEvent(data.code, "link_opened");
     }).catch((error) => {
@@ -107,7 +110,7 @@ export default function Prototype() {
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) if (entry.isIntersecting) recordEvent(invitation.code, "section_viewed", entry.target.id);
     }, { root: scroll, threshold: 0.35 });
-    for (const id of ["programma", "luoghi", "sorprese", "lista-nozze", "conferma"]) {
+    for (const id of ["programma", "luoghi", "tema", "sorprese", "lista-nozze", "conferma"]) {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
     }
@@ -208,16 +211,32 @@ export default function Prototype() {
     track("rsvp_opened", "rsvp");
     window.setTimeout(() => goTo("conferma"), 80);
   };
+  const updateMeal = (id: string, update: Partial<{ choice: DietaryChoice; note: string; childMenu: boolean }>) => {
+    setMealAnswers((current) => ({ ...current, [id]: { ...current[id], ...update } }));
+    setRsvpError("");
+  };
+  const rsvpComplete = (guest: Invitation['guests'][number]) => {
+    const attending = answers[guest.id];
+    const meal = mealAnswers[guest.id];
+    return attending === false || (attending === true && meal && meal.choice !== 'unanswered' && (meal.choice !== 'needs' || Boolean(meal.note.trim())));
+  };
   const saveAnswers = async () => {
-    if (!invitation || rsvpSaving || invitation.guests.some((guest) => answers[guest.id] === null || answers[guest.id] === undefined)) return;
-    const responses = invitation.guests.map((guest) => ({ guestId: guest.id, attending: answers[guest.id] as boolean }));
+    if (!invitation || rsvpSaving || !invitation.guests.every(rsvpComplete)) return;
+    keyboard.hide();
+    const responses: RsvpResponse[] = invitation.guests.map((guest) => ({
+      guestId: guest.id,
+      attending: answers[guest.id] as boolean,
+      dietaryChoice: mealAnswers[guest.id].choice,
+      dietaryNote: mealAnswers[guest.id].choice === 'needs' ? mealAnswers[guest.id].note.trim() : '',
+      childMenu: mealAnswers[guest.id].childMenu,
+    }));
     const signature = JSON.stringify(responses);
     if (pendingRsvpRef.current?.signature !== signature) pendingRsvpRef.current = { signature, requestId: crypto.randomUUID() };
     setRsvpSaving(true);
     setRsvpError("");
     try {
       const saved = await submitRsvp(invitation.code, responses, pendingRsvpRef.current.requestId);
-      setInvitation({ ...invitation, guests: invitation.guests.map((guest) => ({ ...guest, attending: answers[guest.id], respondedAt: saved.savedAt })) });
+      setInvitation({ ...invitation, guests: invitation.guests.map((guest) => ({ ...guest, attending: answers[guest.id], dietaryChoice: mealAnswers[guest.id].choice, dietaryNote: mealAnswers[guest.id].choice === 'needs' ? mealAnswers[guest.id].note.trim() : '', childMenu: mealAnswers[guest.id].childMenu, respondedAt: saved.savedAt })) });
       setRsvpSaved(true);
       setRsvpOpen(false);
       pendingRsvpRef.current = null;
@@ -282,6 +301,16 @@ export default function Prototype() {
             </details>
           </section>
 
+          <section className="theme-section" id="tema" aria-labelledby="tema-title">
+            <p className="eyebrow">Il nostro tema</p>
+            <h2 id="tema-title">Benvenuti nel<br />bosco incantato.</h2>
+            <p>Abbiamo scelto il bosco come simbolo del nostro matrimonio: un luogo in cui ogni cosa trova spazio, tra radici profonde, foglie mosse dal vento e piccole creature che lo rendono vivo.</p>
+            <p>Tra queste ci sono le lucciole. Minuscole in un mondo grande, eppure capaci di illuminare il buio. Ci piace immaginarci così: due lucciole che, incontrandosi, hanno cominciato a rischiararsi il sentiero a vicenda.</p>
+            <p>Questo bosco racconta le nostre radici, il cammino fatto insieme e tutto ciò che continueremo a far crescere.</p>
+            <div className="theme-dress"><p className="small-label">Come vestirsi</p><p>Nessun dress code e nessun colore tema: scegliete ciò che vi rappresenta e vi fa sentire belli, felici e luminosi.</p></div>
+            <p className="theme-closing">Il nostro bosco è fatto di tante luci diverse.</p>
+          </section>
+
           <section className="surprise-section" id="sorprese" aria-labelledby="sorprese-title">
             <h2 id="sorprese-title">Fate una sorpresa agli sposi...</h2>
             <p className="surprise-copy">Avete in mente un discorso, una dedica o una sorpresa? Luca Ferro, il conduttore della festa, vi aiuterà a prepararla per il ricevimento.</p>
@@ -329,9 +358,9 @@ export default function Prototype() {
                   </div>
                 </> : <>
                   <p className="eyebrow">La nostra lista nozze</p>
-                  <h2 id="lista-nozze-title" ref={giftHeadingRef} tabIndex={-1}>Piccole cose,<br />grandi ricordi.</h2>
+                  <h2 id="lista-nozze-title" ref={giftHeadingRef} tabIndex={-1}>La nostra<br />lista nozze.</h2>
                   <p className="gift-copy">Qualche idea per la nostra casa e per i viaggi che ci aspettano.</p>
-                  <p className="registry-note">Questi sono esempi: i link aprono ricerche Amazon, non prodotti già scelti.</p>
+                  <p className="registry-note">Idee provvisorie: i link aprono ricerche Amazon, non prodotti già scelti. Aggiorneremo qui la lista definitiva.</p>
                   <ol className="registry-list">{registryExamples.map((item, index) => <li key={item.name}>
                     <span className="registry-number">{String(index + 1).padStart(2, "0")}</span>
                     <div><h3>{item.name}</h3><p>{item.description}</p><a className="text-link" href={item.href} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" onClick={() => track("external_link_clicked", `registry_${index + 1}`)} aria-label={`Cerca ${item.name} su Amazon (esempio, si apre in una nuova scheda)`}>Cerca su Amazon <ArrowTopRightIcon aria-hidden="true" /></a></div>
@@ -343,24 +372,32 @@ export default function Prototype() {
               <h2 id="rsvp-title">Ci sarete?</h2>
               <p>Fateci sapere se festeggerete con noi.</p>
               {invitation ? rsvpOpen ? <div className="rsvp-form" aria-label="Risposta per ogni persona invitata">
-                <p className="rsvp-intro">Selezionate una risposta per ciascuna persona. Potrete modificarla riaprendo questo link.</p>
+                <p className="rsvp-intro">Indicate la presenza e le esigenze per ogni persona del nucleo. Potrete modificare tutto riaprendo questo link.</p>
                 {invitation.guests.map((guest) => <div className="rsvp-person" key={guest.id}><p>{guest.firstName} {guest.lastName}</p><div className="rsvp-options" role="group" aria-label={`Presenza di ${guest.firstName} ${guest.lastName}`}>
                   <button type="button" ref={guest.id === invitation.guests[0]?.id ? answerRef : undefined} aria-pressed={answers[guest.id] === true} className={answers[guest.id] === true ? "selected" : ""} onClick={() => { setAnswers({ ...answers, [guest.id]: true }); setRsvpError(""); }}>Ci sarò</button>
                   <button type="button" aria-pressed={answers[guest.id] === false} className={answers[guest.id] === false ? "selected" : ""} onClick={() => { setAnswers({ ...answers, [guest.id]: false }); setRsvpError(""); }}>Non ci sarò</button>
-                </div></div>)}
+                </div>{answers[guest.id] === true && <div className="rsvp-meal" role="group" aria-label={`Menù di ${guest.firstName} ${guest.lastName}`}>
+                  <p className="small-label">Menù ed esigenze alimentari</p>
+                  <div className="meal-choices">
+                    <button type="button" className={mealAnswers[guest.id]?.choice === 'none' ? 'selected' : ''} aria-pressed={mealAnswers[guest.id]?.choice === 'none'} onClick={() => updateMeal(guest.id, { choice: 'none', note: '' })}>Nessuna esigenza</button>
+                    <button type="button" className={mealAnswers[guest.id]?.choice === 'needs' ? 'selected' : ''} aria-pressed={mealAnswers[guest.id]?.choice === 'needs'} onClick={() => updateMeal(guest.id, { choice: 'needs' })}>Ho esigenze alimentari</button>
+                  </div>
+                  {mealAnswers[guest.id]?.choice === 'needs' && <label className="meal-note">Allergie, intolleranze o scelte alimentari di {guest.firstName}<KeyboardTextarea value={mealAnswers[guest.id].note} maxLength={500} rows={3} placeholder="Per esempio: allergia alla frutta a guscio, vegetariano…" onChange={(event) => updateMeal(guest.id, { note: event.target.value })} onBlur={() => keyboard.hide()} /></label>}
+                  <label className="child-menu"><input type="checkbox" checked={mealAnswers[guest.id]?.childMenu ?? false} onChange={(event) => updateMeal(guest.id, { childMenu: event.target.checked })} /> Richiedo il menù bambino per {guest.firstName}</label>
+                </div>}</div>)}
                 {rsvpError && <p className="rsvp-error" role="alert">{rsvpError}</p>}
-                <button className="primary-action" type="button" disabled={rsvpSaving || invitation.guests.length === 0 || invitation.guests.some((guest) => answers[guest.id] === null || answers[guest.id] === undefined)} onClick={() => void saveAnswers()}>{rsvpSaving ? "Salvataggio…" : "Salva le risposte"}</button>
-                <button className="secondary-action" type="button" onClick={() => setRsvpOpen(false)}>Annulla</button>
+                <button className="primary-action" type="button" disabled={rsvpSaving || invitation.guests.length === 0 || !invitation.guests.every(rsvpComplete)} onClick={() => void saveAnswers()}>{rsvpSaving ? "Salvataggio…" : "Salva le risposte"}</button>
+                <button className="secondary-action" type="button" onClick={() => { keyboard.hide(); setRsvpOpen(false); }}>Annulla</button>
               </div> : <div className="rsvp-ready">{rsvpSaved && <p className="rsvp-success" role="status"><CheckCircledIcon aria-hidden="true" />Risposte salvate.</p>}{invitation.guests.some((guest) => guest.attending !== null) && <p className="rsvp-existing">{invitation.guests.map((guest) => `${guest.firstName}: ${guest.attending === true ? "presente" : guest.attending === false ? "assente" : "in attesa"}`).join(" · ")}</p>}<button className="primary-action" type="button" onClick={openRsvp}>{invitation.guests.some((guest) => guest.attending !== null) ? "Modifica le risposte" : "Conferma presenza"}</button></div>
                 : <div className="rsvp-unavailable"><p>{inviteState === "loading" ? "Caricamento dell'invito…" : inviteState === "missing" ? "Apri il link personale presente sulla partecipazione per confermare la presenza." : inviteState === "error" ? "Non riusciamo a caricare il tuo invito. Controlla la connessione e riprova." : "Invito non disponibile. Contatta gli sposi per verificare il link."}</p>{inviteState === "error" && <button type="button" className="secondary-action" onClick={() => window.location.reload()}>Riprova</button>}</div>}
             </section>
-            <footer className="invitation-footer"><Signature /><p className="sr-only">Valentina e Riccardo · 22 maggio 2027</p><details className="privacy-note"><summary>Privacy e attività dell'invito</summary><p>Per organizzare il matrimonio, associamo al codice della partecipazione l'apertura dell'invito, le sezioni visitate, i clic sui link e le risposte RSVP. Questi dati sono consultabili dagli sposi nel pannello riservato. Non registriamo digitazioni, movimenti del puntatore o posizione.</p></details></footer>
+            <footer className="invitation-footer"><Signature /><p className="sr-only">Valentina e Riccardo · 22 maggio 2027</p><details className="privacy-note"><summary>Privacy e attività dell'invito</summary><p>Per organizzare il matrimonio, associamo al codice della partecipazione l'apertura dell'invito, le sezioni visitate, i clic sui link, le risposte RSVP e le esigenze alimentari indicate per ciascuna persona. Questi dati sono consultabili dagli sposi nel pannello riservato per organizzare il ricevimento. Non registriamo digitazioni, movimenti del puntatore o posizione.</p></details></footer>
           </div>
         </main>
       </MobileScroll>
       <BottomSheet open={sheet === "menu"} onOpenChange={(open) => !open && setSheet(null)} title="Il nostro giorno" snap={0.48}>
         <nav className="sheet-menu" aria-label="Le sezioni dell'invito">
-          {[["programma", "Il programma"], ["luoghi", "Come arrivare"], ["sorprese", "Fate una sorpresa"], ["lista-nozze", "I regali"]].map(([id, label]) => <button type="button" key={id} onClick={() => { setSheet(null); window.setTimeout(() => { if (id === "lista-nozze") showGiftView("choices"); goTo(id); }, 180); }}>{label}<ArrowTopRightIcon aria-hidden="true" /></button>)}
+          {[["programma", "Il programma"], ["luoghi", "Come arrivare"], ["tema", "Il nostro tema"], ["sorprese", "Fate una sorpresa"], ["lista-nozze", "Lista nozze"]].map(([id, label]) => <button type="button" key={id} onClick={() => { setSheet(null); window.setTimeout(() => { if (id === "lista-nozze") showGiftView("choices"); goTo(id); }, 180); }}>{label}<ArrowTopRightIcon aria-hidden="true" /></button>)}
           <button type="button" onClick={() => { setSheet(null); window.setTimeout(openRsvp, 180); }}>Conferma presenza<ArrowTopRightIcon aria-hidden="true" /></button>
         </nav>
       </BottomSheet>

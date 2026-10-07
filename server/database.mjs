@@ -9,7 +9,7 @@ export function openDatabase(path = process.env.WEDDING_DB_PATH || './data/weddi
   if (path !== ':memory:') db.exec('PRAGMA journal_mode = WAL;');
   db.exec('CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)');
   const version = db.prepare('SELECT COALESCE(MAX(version), 0) AS version FROM schema_migrations').get().version;
-  for (const [nextVersion, file] of [[1, '001_initial.sql'], [2, '002_event_code.sql']]) {
+  for (const [nextVersion, file] of [[1, '001_initial.sql'], [2, '002_event_code.sql'], [3, '003_guest_meals.sql']]) {
     if (version >= nextVersion) continue;
     const sql = readFileSync(new URL(`./migrations/${file}`, import.meta.url), 'utf8');
     db.exec('BEGIN IMMEDIATE');

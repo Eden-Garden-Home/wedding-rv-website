@@ -48,7 +48,7 @@ export function findHousehold(db, code) {
 export function getInvitation(db, code) {
   const household = findHousehold(db, code);
   if (!household) fail(404, 'Invito non disponibile');
-  const guests = db.prepare('SELECT id, first_name, last_name, attending, responded_at FROM guests WHERE household_id = ? AND active = 1 ORDER BY sort_order, id').all(household.id);
+  const guests = db.prepare('SELECT id, first_name, last_name, attending, responded_at, dietary_choice, dietary_note, child_menu FROM guests WHERE household_id = ? AND active = 1 ORDER BY sort_order, id').all(household.id);
   return {
     code: household.code,
     displayName: household.display_name,
@@ -58,6 +58,9 @@ export function getInvitation(db, code) {
       lastName: guest.last_name,
       attending: guest.attending === null ? null : Boolean(guest.attending),
       respondedAt: guest.responded_at,
+      dietaryChoice: guest.dietary_choice,
+      dietaryNote: guest.dietary_note,
+      childMenu: Boolean(guest.child_menu),
     })),
   };
 }
@@ -78,28 +81,42 @@ export function saveRsvp(db, code, input) {
   if (!household) fail(404, 'Invito non disponibile');
   const { requestId, responses } = input || {};
   if (!validUuid(requestId) || !Array.isArray(responses)) fail(400, 'Risposta non valida');
-  const guestRows = db.prepare('SELECT id, attending FROM guests WHERE household_id = ? AND active = 1 ORDER BY id').all(household.id);
+  const guestRows = db.prepare('SELECT id, attending, dietary_choice, dietary_note, child_menu FROM guests WHERE household_id = ? AND active = 1 ORDER BY id').all(household.id);
   if (!guestRows.length || responses.length !== guestRows.length) fail(400, 'Indica una risposta per ogni invitato');
   const byId = new Map();
   for (const response of responses) {
     if (!response || !validId(response.guestId) || typeof response.attending !== 'boolean' || byId.has(response.guestId)) fail(400, 'Risposta non valida');
-    byId.set(response.guestId, response.attending);
+    const existing = guestRows.find((guest) => guest.id === response.guestId);
+    if (!existing) fail(400, 'Risposta non valida');
+    const choice = response.dietaryChoice === undefined ? existing.dietary_choice : response.dietaryChoice;
+    const note = response.dietaryNote === undefined ? existing.dietary_note : response.dietaryNote;
+    const childMenu = response.childMenu === undefined ? Boolean(existing.child_menu) : response.childMenu;
+    if (!['unanswered', 'none', 'needs'].includes(choice) || typeof note !== 'string' || note.length > 500 || /[\u0000-\u0009\u000b\u000c\u000e-\u001f\u007f]/.test(note) || typeof childMenu !== 'boolean') fail(400, 'Esigenze alimentari non valide');
+    if (response.attending && response.dietaryChoice === 'unanswered') fail(400, 'Indica le esigenze alimentari di ogni partecipante');
+    if (choice === 'needs' && !note.trim()) fail(400, 'Descrivi le esigenze alimentari');
+    if (choice !== 'needs' && note.trim()) fail(400, 'Esigenze alimentari non valide');
+    byId.set(response.guestId, { guestId: response.guestId, attending: response.attending, dietaryChoice: choice, dietaryNote: note.trim(), childMenu });
   }
   if (guestRows.some((guest) => !byId.has(guest.id))) fail(400, 'Indica una risposta per ogni invitato');
-  const canonical = guestRows.map((guest) => ({ guestId: guest.id, attending: byId.get(guest.id) }));
+  const canonical = guestRows.map((guest) => byId.get(guest.id));
   const payloadHash = digest(JSON.stringify(canonical));
+  const legacyPayload = responses.every((response) => response.dietaryChoice === undefined && response.dietaryNote === undefined && response.childMenu === undefined);
+  const legacyHash = digest(JSON.stringify(canonical.map(({ guestId, attending }) => ({ guestId, attending }))));
   return transaction(db, () => {
     const previousRequest = db.prepare('SELECT household_id, payload_hash, response_json FROM rsvp_requests WHERE request_id = ?').get(requestId);
     if (previousRequest) {
-      if (previousRequest.household_id !== household.id || previousRequest.payload_hash !== payloadHash) fail(409, 'Questa richiesta è già stata usata per dati diversi');
+      if (previousRequest.household_id !== household.id || (previousRequest.payload_hash !== payloadHash && !(legacyPayload && previousRequest.payload_hash === legacyHash))) fail(409, 'Questa richiesta è già stata usata per dati diversi');
       return JSON.parse(previousRequest.response_json);
     }
-    const changed = guestRows.some((guest) => guest.attending === null || Boolean(guest.attending) !== byId.get(guest.id));
+    const changed = guestRows.some((guest) => {
+      const response = byId.get(guest.id);
+      return guest.attending === null || Boolean(guest.attending) !== response.attending || guest.dietary_choice !== response.dietaryChoice || guest.dietary_note !== response.dietaryNote || Boolean(guest.child_menu) !== response.childMenu;
+    });
     const firstSubmission = guestRows.every((guest) => guest.attending === null);
     const savedAt = now();
     if (changed) {
-      const update = db.prepare('UPDATE guests SET attending = ?, responded_at = ?, updated_at = ? WHERE id = ? AND household_id = ?');
-      for (const response of canonical) update.run(Number(response.attending), savedAt, savedAt, response.guestId, household.id);
+      const update = db.prepare('UPDATE guests SET attending = ?, dietary_choice = ?, dietary_note = ?, child_menu = ?, responded_at = ?, updated_at = ? WHERE id = ? AND household_id = ?');
+      for (const response of canonical) update.run(Number(response.attending), response.dietaryChoice, response.dietaryNote, Number(response.childMenu), savedAt, savedAt, response.guestId, household.id);
       db.prepare('INSERT INTO invitation_events(id, household_id, invitation_code, name, target, dedupe_key, occurred_at) VALUES(?, ?, ?, ?, ?, ?, ?)')
         .run(randomUUID(), household.id, household.code, firstSubmission ? 'rsvp_submitted' : 'rsvp_modified', 'rsvp', `rsvp:${requestId}`, savedAt);
     }
@@ -123,8 +140,8 @@ export function listHouseholds(db, baseUrl, query = '') {
     id: row.id, code: row.code, displayName: row.display_name, active: Boolean(row.active),
     url: invitationUrl(baseUrl, row.code), guestCount: row.guest_count,
     attendingCount: row.attending_count, absentCount: row.absent_count, pendingCount: row.pending_count,
-    guests: db.prepare('SELECT id, first_name, last_name, sort_order, active, attending, responded_at FROM guests WHERE household_id = ? ORDER BY sort_order, id').all(row.id)
-      .map((guest) => ({ id: guest.id, firstName: guest.first_name, lastName: guest.last_name, sortOrder: guest.sort_order, active: Boolean(guest.active), attending: guest.attending === null ? null : Boolean(guest.attending), respondedAt: guest.responded_at })),
+    guests: db.prepare('SELECT id, first_name, last_name, sort_order, active, attending, responded_at, dietary_choice, dietary_note, child_menu FROM guests WHERE household_id = ? ORDER BY sort_order, id').all(row.id)
+      .map((guest) => ({ id: guest.id, firstName: guest.first_name, lastName: guest.last_name, sortOrder: guest.sort_order, active: Boolean(guest.active), attending: guest.attending === null ? null : Boolean(guest.attending), respondedAt: guest.responded_at, dietaryChoice: guest.dietary_choice, dietaryNote: guest.dietary_note, childMenu: Boolean(guest.child_menu) })),
   }));
 }
 
@@ -254,10 +271,10 @@ export function exportCsv(db, kind, baseUrl) {
     })));
   }
   if (kind === 'rsvps') {
-    return toCsv(['household_id', 'code', 'display_name', 'person_id', 'first_name', 'last_name', 'attendance', 'responded_at'],
+    return toCsv(['household_id', 'code', 'display_name', 'person_id', 'first_name', 'last_name', 'attendance', 'dietary_choice', 'dietary_note', 'child_menu', 'responded_at'],
       db.prepare(`SELECT h.id AS household_id, h.code, h.display_name, g.id AS person_id, g.first_name, g.last_name,
-        g.attending, g.responded_at FROM guests g JOIN households h ON h.id=g.household_id ORDER BY h.display_name, g.sort_order`).all()
-        .map((row) => ({ ...row, attendance: row.attending === null ? 'in_attesa' : row.attending ? 'presente' : 'assente' })));
+        g.attending, g.dietary_choice, g.dietary_note, g.child_menu, g.responded_at FROM guests g JOIN households h ON h.id=g.household_id ORDER BY h.display_name, g.sort_order`).all()
+        .map((row) => ({ ...row, dietary_note: /^[=+\-@\t\r]/.test(row.dietary_note) ? `'${row.dietary_note}` : row.dietary_note, attendance: row.attending === null ? 'in_attesa' : row.attending ? 'presente' : 'assente' })));
   }
   if (kind === 'events') {
     return toCsv(['occurred_at', 'code', 'display_name', 'event_name', 'target'],

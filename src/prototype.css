@@ -124,6 +124,14 @@
 .place-list h3 { font-size: 21px; line-height: 1.3; }
 .place-list p { margin-top: 8px; font-size: 16px; }
 
+.theme-section { position: relative; margin: 72px 36px 0; padding: 41px 20px 39px; border-block: 1px solid var(--wedding-hairline); }
+.theme-section::before { position: absolute; top: -2px; left: 20px; width: 42px; height: 3px; background: var(--wedding-rose); content: ""; }
+.theme-section h2 { margin-top: 20px; font: 400 32px/1.16 var(--wedding-text-font); letter-spacing: -.045em; }
+.theme-section > p:not(.eyebrow):not(.theme-closing) { margin-top: 21px; font-size: 15px; line-height: 1.58; }
+.theme-dress { margin-top: 28px; padding: 20px 0; border-block: 1px solid var(--wedding-hairline); }
+.theme-dress p:last-child { margin-top: 10px; font-size: 15px; line-height: 1.55; }
+.theme-closing { margin-top: 22px; font-size: 18px; line-height: 1.35; text-align: right; }
+
 .surprise-section { position: relative; margin: 72px 36px 0; padding: 39px 20px 38px; border-block: 1px solid var(--wedding-hairline); }
 .surprise-section::before { position: absolute; top: -2px; left: 20px; width: 42px; height: 3px; background: var(--wedding-rose); content: ""; }
 .surprise-section h2 { margin-top: 5px; font: 400 32px/1.15 var(--wedding-text-font); letter-spacing: -.04em; }
@@ -194,6 +202,14 @@
 .rsvp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; }
 .rsvp-options button { min-height: 44px; padding: 8px 7px; border: 1px solid var(--wedding-hairline); background: rgb(255 250 240 / .45); color: var(--wedding-green); font-size: 12px; line-height: 1.35; }
 .rsvp-options button.selected { border-color: var(--wedding-green); background: #e1e8da; }
+.rsvp-meal { margin-top: 20px; padding: 17px 14px 18px; border: 1px solid var(--wedding-hairline); background: rgb(255 250 240 / .42); }
+.meal-choices { display: grid; gap: 8px; margin-top: 12px; }
+.meal-choices button { min-height: 43px; padding: 8px 11px; border: 1px solid var(--wedding-hairline); background: transparent; color: var(--wedding-green); font-size: 12px; text-align: left; }
+.meal-choices button.selected { border-color: var(--wedding-green); background: #e1e8da; }
+.meal-note { display: block; margin-top: 16px; font-size: 12px; line-height: 1.45; }
+.meal-note textarea { display: block; width: 100%; min-height: 86px; margin-top: 8px; padding: 10px; border: 1px solid var(--wedding-hairline); border-radius: 0; background: #fffaf0; color: var(--wedding-green); font: 400 13px/1.5 var(--wedding-text-font); resize: vertical; }
+.child-menu { display: flex; align-items: flex-start; gap: 9px; margin-top: 17px; font-size: 12px; line-height: 1.45; }
+.child-menu input { flex: 0 0 auto; width: 18px; height: 18px; margin: 0; accent-color: var(--wedding-green); }
 .rsvp-form > .primary-action { margin-top: 15px; font-size: 16px !important; }
 .rsvp-form > .secondary-action { font-size: 13px !important; }
 .rsvp-error { margin: 14px 0 0 !important; color: #a33b34; font-size: 12px !important; }

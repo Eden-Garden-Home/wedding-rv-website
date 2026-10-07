@@ -35,14 +35,16 @@ Il database usa WAL e chiavi esterne. Le tabelle principali sono:
 | Tabella | Scopo |
 | --- | --- |
 | `households` | ID stabile, codice NFC univoco, destinatario della busta, stato attivo |
-| `guests` | ID stabile, nucleo, nome, cognome, ordine, stato, presenza e data della risposta |
+| `guests` | ID stabile, nucleo, nome, cognome, ordine, presenza, esigenze alimentari, menù bambino e data della risposta |
 | `invitation_events` | Evento, nucleo, codice usato in quel momento, bersaglio, data UTC e chiave di deduplicazione |
 | `rsvp_requests` | Chiave di idempotenza e risultato di ogni salvataggio RSVP |
 | `admin_sessions` | Sessioni amministrative con token cifrato tramite hash |
 
 Gli RSVP si salvano in una transazione unica per tutte le persone attive del nucleo. Una ritrasmissione
 della stessa richiesta restituisce lo stesso risultato senza aggiungere risposte o eventi. Una risposta successiva
-con lo stesso link può modificare le presenze. Le date nel database sono ISO 8601 in UTC; il pannello le mostra
+con lo stesso link può modificare le presenze e le informazioni per il menù. Ogni persona presente indica
+esplicitamente se ha esigenze alimentari e può richiedere il menù bambino. Allergie, intolleranze e scelte
+alimentari sono raccolte come nota libera (massimo 500 caratteri) per la persona interessata. Le date nel database sono ISO 8601 in UTC; il pannello le mostra
 in ora locale.
 
 ## CSV per Excel
@@ -80,7 +82,9 @@ rossi-01-giulia;rossi-01;Giulia;Rossi;0;1
 rossi-01-marco;rossi-01;Marco;Rossi;1;1
 ```
 
-I CSV `rsvps.csv` ed `events.csv` sono esportazioni di sola lettura. I nomi e destinatari che iniziano con
+`rsvps.csv` include `dietary_choice` (`none`, `needs`, `unanswered`), `dietary_note` e `child_menu` per ogni persona.
+`unanswered` segnala le vecchie risposte per cui il menù non è ancora stato indicato. I CSV `rsvps.csv` ed
+`events.csv` sono esportazioni di sola lettura. I nomi e destinatari che iniziano con
 caratteri di formula Excel sono rifiutati dall'importazione.
 
 ## Eventi e informativa

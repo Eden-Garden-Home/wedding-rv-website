@@ -6,6 +6,11 @@ il sito e `127.0.0.1:8081` per il pannello. `cloudflared` resta un servizio
 systemd sull'host. Tailscale è separato e serve soltanto per l'accesso remoto.
 
 Questa configurazione è stata pubblicata sulla VM il 27 settembre 2026.
+L'aggiornamento del 7 ottobre 2026 aggiunge il tema del bosco, rende esplicita
+la lista nozze provvisoria e introduce la migrazione `003_guest_meals.sql` per
+le esigenze alimentari e il menù bambino per persona. Gli RSVP precedenti
+restano validi; nel pannello il menù appare come «Da indicare» finché l'ospite
+non aggiorna la risposta.
 Le funzioni e il formato dei CSV sono documentati in [docs/INVITI_NFC.md](docs/INVITI_NFC.md).
 
 ## Build e aggiornamento

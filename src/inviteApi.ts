@@ -1,6 +1,7 @@
-export type InviteGuest = { id: string; firstName: string; lastName: string; attending: boolean | null; respondedAt: string | null };
+export type DietaryChoice = 'unanswered' | 'none' | 'needs';
+export type InviteGuest = { id: string; firstName: string; lastName: string; attending: boolean | null; respondedAt: string | null; dietaryChoice: DietaryChoice; dietaryNote: string; childMenu: boolean };
 export type Invitation = { code: string; displayName: string; guests: InviteGuest[] };
-export type RsvpResponse = { guestId: string; attending: boolean };
+export type RsvpResponse = { guestId: string; attending: boolean; dietaryChoice: DietaryChoice; dietaryNote: string; childMenu: boolean };
 
 const apiBase = import.meta.env.DEV ? 'http://127.0.0.1:8787' : '';
 const visitKey = 'wedding-invitation-visit';

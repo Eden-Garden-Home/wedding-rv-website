@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { DatabaseSync } from 'node:sqlite';
 import { openDatabase } from '../server/database.mjs';
 import { createHttpServer } from '../server/http.mjs';
 import { hashPassword } from '../server/password.mjs';
@@ -50,6 +54,57 @@ test('RSVP per persona: conferma, modifica e ritrasmissione idempotente', () => 
     assert.deepEqual(getInvitation(db, row.code).guests.map(({ attending }) => attending), [true, true]);
     assert.equal(db.prepare('SELECT COUNT(*) AS count FROM invitation_events WHERE name = ?').get('rsvp_modified').count, 1);
   } finally { db.close(); }
+});
+
+test('menù ed esigenze alimentari sono salvati e modificabili per ogni persona', () => {
+  const db = openDatabase(':memory:');
+  try {
+    const row = createHousehold(db, family, base);
+    const [first, second] = row.guests;
+    const requestId = randomUUID();
+    const responses = [
+      { guestId: first.id, attending: true, dietaryChoice: 'needs', dietaryNote: 'Vegetariana;\nallergia alle noci', childMenu: false },
+      { guestId: second.id, attending: true, dietaryChoice: 'none', dietaryNote: '', childMenu: true },
+    ];
+    assert.throws(() => saveRsvp(db, row.code, { requestId, responses: [{ ...responses[0], dietaryNote: '' }, responses[1]] }), { status: 400 });
+    assert.throws(() => saveRsvp(db, row.code, { requestId, responses: [{ ...responses[0], dietaryChoice: 'unanswered' }, responses[1]] }), { status: 400 });
+    const saved = saveRsvp(db, row.code, { requestId, responses });
+    assert.equal(saved.changed, true);
+    assert.deepEqual(saveRsvp(db, row.code, { requestId, responses }), saved);
+    assert.deepEqual(getInvitation(db, row.code).guests.map(({ dietaryChoice, childMenu }) => [dietaryChoice, childMenu]), [['needs', false], ['none', true]]);
+    assert.match(exportCsv(db, 'rsvps', base), /Vegetariana;\nallergia alle noci/);
+    saveRsvp(db, row.code, { requestId: randomUUID(), responses: [{ ...responses[0], dietaryChoice: 'none', dietaryNote: '' }, responses[1]] });
+    assert.equal(getInvitation(db, row.code).guests[0].dietaryNote, '');
+    assert.equal(db.prepare("SELECT COUNT(*) AS count FROM invitation_events WHERE name='rsvp_modified'").get().count, 1);
+    saveRsvp(db, row.code, { requestId: randomUUID(), responses: [{ ...responses[0], dietaryNote: '=HYPERLINK("bad")' }, responses[1]] });
+    assert.match(exportCsv(db, 'rsvps', base), /'=HYPERLINK/);
+  } finally { db.close(); }
+});
+
+test('la migrazione del menù conserva gli RSVP già presenti', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'wedding-migration-'));
+  const path = join(directory, 'wedding.sqlite');
+  const old = new DatabaseSync(path);
+  try {
+    old.exec(readFileSync(new URL('../server/migrations/001_initial.sql', import.meta.url), 'utf8'));
+    old.exec(readFileSync(new URL('../server/migrations/002_event_code.sql', import.meta.url), 'utf8'));
+    old.exec('CREATE TABLE schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)');
+    old.exec("INSERT INTO schema_migrations VALUES (1, '2026-09-27'), (2, '2026-09-27')");
+    old.prepare(`INSERT INTO households(id, code, display_name, active, created_at, updated_at) VALUES (?, ?, ?, 1, ?, ?)`)
+      .run('legacy', 'ABC234', 'Per Ada', '2026-09-27', '2026-09-27');
+    old.prepare(`INSERT INTO guests(id, household_id, first_name, last_name, active, attending, responded_at, created_at, updated_at) VALUES (?, ?, ?, ?, 1, 1, ?, ?, ?)`)
+      .run('ada', 'legacy', 'Ada', 'Rossi', '2026-09-27', '2026-09-27', '2026-09-27');
+  } finally { old.close(); }
+  try {
+    const upgraded = openDatabase(path);
+    try {
+      const person = getInvitation(upgraded, 'ABC234').guests[0];
+      assert.equal(person.attending, true);
+      assert.equal(person.dietaryChoice, 'unanswered');
+      assert.equal(person.childMenu, false);
+      assert.equal(upgraded.prepare('SELECT MAX(version) AS version FROM schema_migrations').get().version, 3);
+    } finally { upgraded.close(); }
+  } finally { rmSync(directory, { recursive: true, force: true }); }
 });
 
 test('eventi significativi deduplicati per visita ed esportati con data e codice', () => {
