@@ -15,6 +15,13 @@ Le funzioni e il formato dei CSV sono documentati in [docs/INVITI_NFC.md](docs/I
 
 ## Build e aggiornamento
 
+L'aggiornamento del 25 ottobre 2026 rinnova il collage iniziale con due Polaroid,
+sposta le immagini dei luoghi nelle tappe del programma, porta la cerimonia alle
+15:00 e aggiunge icone animate trasparenti con supporto a movimento ridotto.
+La sezione regali offre soltanto il bonifico per la Patagonia; l'IBAN rimane da
+compilare. I testi di tema e sorprese sono aggiornati. API, database e volumi
+persistenti mantengono la configurazione esistente.
+
 Sulla VM i file del progetto sono in `/home/wedding-website-prod/wedding-site`.
 Prima della prima accensione, creare `.env` sulla VM con
 `WEDDING_ADMIN_PASSWORD_HASH=<hash>`. Generare l'hash con

@@ -4,6 +4,28 @@
 
 ### Wedding prototype decisions
 
+- Envelope recipient (25 October 2026): personalized recipient text uses 22px, matching the size of “Tocca il sigillo”; retain balanced wrapping for longer household names.
+
+- Gifts, single method (25 October 2026): remove the registry and its sample products entirely. Only a bank transfer toward Patagonia remains. Use warm optional-gift copy, keep “Un pensiero per noi”, the animated mountain icon and the existing empty-IBAN state. Navigation uses “Un pensiero per noi” instead of “Lista nozze”.
+
+- Icon cleanup (25 October 2026): icon canvases must be transparent over the textured paper. Mask the route behind program drawings rather than painting cream rectangles. Keep forest trees in separate subpaths; animate Maps as one complete pin so its clip never cuts it; draw the RSVP heart above the envelope with no opaque fill.
+
+- Animated icons (25 October 2026): use lightweight looping SVG/CSS scenes in the existing line style: church bell, venue windows lighting up, clinking glasses/music, swaying forest/fireflies, shirt, Patagonia waves/sun, RSVP heart, bouncing Maps pins and ringing WhatsApp handset. Pause offscreen loops, preserve timeline anchor geometry and honor reduced motion. Utility arrows get a small hover movement.
+
+- Gift copy (25 October 2026): title “Un pensiero per noi”; introduce the two ways to contribute to the couple's dreams. First choice is “Aiutaci a raggiungere la fine del mondo” / “Un piccolo contributo al nostro viaggio in Patagonia.” with a restrained mountain-and-water line icon. Preserve the registry choice and blank IBAN. Add an envelope/heart line icon above RSVP.
+
+- Copy simplification (25 October 2026): remove the firefly paragraph, roots/journey paragraph and closing sentence from the theme, retaining its opening explanation and no-dress-code note. Remove the theme's bottom divider. Surprise copy asks about a song, choreography or speech and explains that Luca Ferro collects ideas for the evening schedule; preserve his contact and WhatsApp action.
+
+- Hero Polaroids (25 October 2026): replace the three couple snapshots with the two supplied Christmas instant prints, isolated from their tabletop on transparent backgrounds. Preserve the original physical paper frames and wide lower margins; do not add CSS photo borders or crop their contents. Keep church, Fondaco video and lights in the program.
+
+- Photo placement (25 October 2026): the hero collage now uses the three supplied real couple photos (gardens kiss, selfie, snow). Move the church photo, Fondaco video, and party lights image into their corresponding program entries below the copy/Maps links. Preserve the print styling, timeline icons and responsive dotted route. This supersedes the old hero collage asset placement.
+
+- Invitation refinements (25 October 2026): ceremony starts at 15:00 (hero and program). Keep Maps labels on one line. Add small line icons above the theme (forest and firefly dots) and clothing note (shirt with no-restriction mark), superseding the old no-botanical-overlay rule only for this requested theme icon. The closing theme sentence has weight 900. Remove the top rule and pink accent above the surprise heading.
+
+- Directions refinement (25 October 2026): Maps links show a recognizable multicolor map pin and “Apri Google Maps”. Remove the top divider and pink accent above “Il nostro tema”; preserve the small rule below its eyebrow.
+
+- Program icons (25 October 2026): add restrained line icons for the church, Fondaco dei Mercanti and the party (clinking glasses with music). Keep the three circular stops and winding dotted route; this supersedes the earlier instruction to avoid section icons for these program entries.
+
 - Current visual source (12 September 2026): option 3, **Sotto gli alberi**, the third displayed generated mock `exec-eba18db5-f0d8-4c13-8a57-c887107fb9f0.png`. This choice supersedes the older collage-first composition below. Keep one continuous ivory paper with narrow dusty-pink edges, small embossed pink top corners, Cherolina names above the real church/video/lights collage, and fine olive tree etchings at the margins.
 - The selected direction uses a numbered editorial program (01/02/03), direct Maps links, expandable address details, a simple wedding-list disclosure, and one rectangular green RSVP action. Avoid generic rounded cards, section icons, visible stars, heavy glow effects, and repeated large name blocks.
 - Preserve the accepted simple intro reveal; it now dissolves directly from the closed envelope into the live invitation so there is no duplicate open-envelope image or second landing. The historical 3D requirement below is superseded by the later accepted simplified reveal. Keep the live status bar and home indicator above the intro, and the underlying invitation inert until the reveal completes.
@@ -39,6 +61,8 @@ Before making substantial visual changes, use the Product Design plugin's `get-c
 When implementing from a selected generated mock, treat that image as the source of truth for layout, component anatomy, density, spacing, color, typography, visible content, and hierarchy.
 
 ## Editing Boundary
+
+- Closed-envelope hint refinement (25 October 2026): keep “Tocca il sigillo” white and larger (22px), with a subtle shadow and gentle opacity pulse that remains readable throughout.
 
 - Build app-specific UI in `src/Prototype.tsx` and `src/prototype.css`.
 - Treat `src/App.tsx`, `src/main.tsx`, `src/styles.css`, `src/mobile/`, `public/assets/iphone/`, `public/assets/android/`, `public/assets/status/`, `vite.config.ts`, `worker/index.js`, and `scripts/prepare-sites-build.mjs` as protected runtime files. Do not edit, replace, remove, or recreate them unless the user explicitly asks to change the mobile runtime itself. For an explicit runtime change, update the affected lock hashes only after verifying the new runtime behavior.
