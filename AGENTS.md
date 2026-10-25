@@ -4,6 +4,8 @@
 
 ### Wedding prototype decisions
 
+- Envelope recipient color (25 October 2026): personalized recipient names are white, with the same subtle shadow as the seal hint, at 22px.
+
 - Envelope recipient (25 October 2026): personalized recipient text uses 22px, matching the size of “Tocca il sigillo”; retain balanced wrapping for longer household names.
 
 - Gifts, single method (25 October 2026): remove the registry and its sample products entirely. Only a bank transfer toward Patagonia remains. Use warm optional-gift copy, keep “Un pensiero per noi”, the animated mountain icon and the existing empty-IBAN state. Navigation uses “Un pensiero per noi” instead of “Lista nozze”.

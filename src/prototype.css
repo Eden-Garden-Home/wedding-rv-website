@@ -49,7 +49,7 @@
 .seal-trigger { position: absolute; top: 50%; left: 50%; width: 142px; height: 142px; padding: 0; transform: translate(-50%, -50%); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
 .seal-trigger:disabled { visibility: hidden; }
 .loader-caption { position: absolute; top: calc(50% + 98px); right: 18px; left: 18px; text-align: center; }
-.loader-recipient { margin: 0 0 12px; color: #425044; font: 400 22px/1.4 var(--wedding-text-font); text-wrap: balance; }
+.loader-recipient { margin: 0 0 12px; color: #fff; font: 400 22px/1.4 var(--wedding-text-font); text-shadow: 0 1px 3px rgb(74 39 34 / .3); text-wrap: balance; }
 .loader-hint { margin: 0; color: #fff; font: 400 22px/1.35 var(--wedding-text-font); text-shadow: 0 1px 3px rgb(74 39 34 / .3); animation: seal-hint-pulse 2.2s ease-in-out infinite; }
 @keyframes envelope-release { 0% { opacity: 1; } 30% { opacity: .96; } 100% { opacity: 0; transform: translateY(-12px) scale(1.025); } }
 @keyframes seal-hint-pulse { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
