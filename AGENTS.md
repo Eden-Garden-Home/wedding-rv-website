@@ -4,6 +4,14 @@
 
 ### Wedding prototype decisions
 
+- Approved copy (2 November 2026): use “Maggio”, “Il nostro Sì!”, “A seguire / Il Ricevimento”, “Il Fondaco dei Mercanti”, “Benvenuti nel Bosco Incantato” and the supplied two-paragraph woodland/amore explanation. Surprise heading and navigation are “Dediche e sorprese” (no additional icon needed). Gift section uses the supplied thoughtful-gifts introduction and “Verso la fine del mondo” for Patagonia, including the bank detail view.
+
+- Copy voice (2 November 2026, revised): use second-person plural (voi) in editorial invitation text; use second-person singular (tu) for buttons, action links, operational instructions, errors prompting an action and their accessible labels (e.g. “Tocca il sigillo”, “Apri Google Maps”, “Salva le risposte”). Keep neutral attendance labels for individual RSVP rows.
+
+- Icon refinements (2 November 2026): forest illustration uses detailed pines; clothing uses an elegant evening gown with a detached heart. RSVP envelope folds must be symmetric and its flanking wheat stems carefully drawn.
+
+- Icon art direction (2 November 2026): the user rejected simplistic pictograms. Use bespoke editorial illustrations with architectural / organic detail, restrained engraving, transparent sage and antique-gold washes, and quiet motion. Keep them legible at actual mobile size; preserve the paper, layout and timeline anchors.
+
 - Envelope recipient color (25 October 2026): personalized recipient names are white, with the same subtle shadow as the seal hint, at 22px.
 
 - Envelope recipient (25 October 2026): personalized recipient text uses 22px, matching the size of “Tocca il sigillo”; retain balanced wrapping for longer household names.

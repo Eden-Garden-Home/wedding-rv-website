@@ -111,8 +111,8 @@
 .day-timeline li:nth-of-type(1) .timeline-stop { margin-left: 24px; }
 .day-timeline li:nth-of-type(2) .timeline-stop { margin-left: 12px; }
 .day-timeline li:nth-of-type(3) .timeline-stop { margin-left: 29px; }
-.program-icon { position: absolute; top: 28px; left: 50%; width: 52px; height: 52px; transform: translateX(-50%); color: var(--wedding-green); background: transparent; }
-.program-icon-venue { width: 58px; }
+.program-icon { position: absolute; top: 28px; left: 50%; width: 64px; height: 64px; transform: translateX(-50%); color: var(--wedding-green); background: transparent; }
+.program-icon-venue { width: 68px; }
 .day-timeline h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.03em; }
 .day-timeline h3 > * { display: block; }
 .day-timeline p { margin-top: 8px; font-size: 16px; line-height: 1.45; }
@@ -146,10 +146,10 @@
 .theme-section > p:not(.eyebrow) { margin-top: 21px; font-size: 15px; line-height: 1.58; }
 .theme-dress { margin-top: 28px; padding: 20px 0; border-block: 1px solid var(--wedding-hairline); }
 .theme-dress p:last-child { margin-top: 10px; font-size: 15px; line-height: 1.55; }
-.theme-icon { display: block; width: 80px; height: 64px; margin-bottom: 20px; color: var(--wedding-green); }
-.closing-icon { display: block; width: 72px; height: 58px; margin-bottom: 16px; color: var(--wedding-green); flex: 0 0 auto; }
+.theme-icon { display: block; width: 132px; height: 99px; margin-bottom: 22px; color: var(--wedding-green); }
+.closing-icon { display: block; width: 112px; height: 84px; margin-bottom: 20px; color: var(--wedding-green); flex: 0 0 auto; }
 .final-rsvp > .closing-icon { margin-inline: auto; margin-bottom: 18px; }
-.dress-icon { width: 64px; height: 52px; margin-bottom: 14px; }
+.dress-icon { width: 100px; height: 75px; margin-bottom: 14px; }
 
 .surprise-section { position: relative; margin: 72px 36px 0; padding: 39px 20px 38px; border-bottom: 1px solid var(--wedding-hairline); }
 .surprise-section h2 { margin-top: 5px; font: 400 32px/1.15 var(--wedding-text-font); letter-spacing: -.04em; }
@@ -296,24 +296,32 @@
 
 /* Tiny looping scenes: animate SVG contents without moving timeline anchors. */
 .program-icon, .theme-icon, .closing-icon { overflow: visible; }
+.icon-detail { opacity: .62; stroke-width: .85; }
+.icon-wash { fill: #76866b; fill-opacity: .10; stroke: none; }
+.icon-shade { fill: #4b624b; fill-opacity: .13; stroke: none; }
+.icon-gold-wash { fill: #b08a55; fill-opacity: .12; stroke: none; }
+.icon-ground { opacity: .4; stroke-width: .9; }
+.rsvp-wheat { stroke-width: 1.1; }
+.icon-bubble { stroke: #ac8358; stroke-width: .8; }
+.icon-accent { color: #ac8358; }
 .church-bell { transform-box: fill-box; transform-origin: 50% 0; animation: icon-bell 4.8s ease-in-out infinite; }
-.venue-light { animation: icon-window 5s ease-in-out infinite; }
+.venue-light { fill: #b08a55; stroke: none; animation: icon-window 5s ease-in-out infinite; }
 .venue-light-two { animation-delay: .45s; }
 .venue-light-three { animation-delay: .9s; }
-.party-glass-left { transform-origin: 11px 55px; animation: icon-toast-left 4s ease-in-out infinite; }
-.party-glass-right { transform-origin: 53px 55px; animation: icon-toast-right 4s ease-in-out infinite; }
+.party-glass-left { transform-origin: 33px 67px; animation: icon-toast-left 6s ease-in-out infinite; }
+.party-glass-right { transform-origin: 87px 67px; animation: icon-toast-right 6s ease-in-out infinite; }
 .party-notes { animation: icon-notes 4s ease-in-out infinite; }
 .party-confetti { animation: icon-twinkle 4s ease-in-out infinite; }
-.forest-trees { transform-origin: 40px 55px; animation: icon-trees 6s ease-in-out infinite; }
+.forest-trees { transform-origin: 72px 92px; animation: icon-trees 6s ease-in-out infinite; }
 .forest-icon > circle { animation: icon-firefly 4.5s ease-in-out infinite; }
 .forest-icon > circle:nth-of-type(2) { animation-delay: -1.1s; }
 .forest-icon > circle:nth-of-type(3) { animation-delay: -2.4s; }
 .forest-icon > circle:nth-of-type(4) { animation-delay: -3.4s; }
-.dress-icon > path:first-child { transform-origin: 40px 16px; animation: icon-shirt 5s ease-in-out infinite; }
-.dress-icon > circle, .dress-icon > path:last-child { transform-origin: 61px 46px; animation: icon-freedom 5s ease-in-out infinite; }
+.dress-gown { transform-origin: 60px 12px; animation: icon-shirt 5s ease-in-out infinite; }
+.dress-freedom { transform-origin: 120px 80px; animation: icon-freedom 5s ease-in-out infinite; }
 .patagonia-waves { animation: icon-waves 4.5s ease-in-out infinite; }
-.patagonia-sun { transform-origin: 14px 12px; animation: icon-sun 6s ease-in-out infinite; }
-.rsvp-heart { transform-origin: 40px 25px; animation: icon-heart 3.8s ease-in-out infinite; }
+.patagonia-sun { transform-origin: 33px 22px; animation: icon-sun 6s ease-in-out infinite; }
+.rsvp-heart { transform-origin: 72px 40px; animation: icon-heart 3.8s ease-in-out infinite; }
 .google-maps-icon { overflow: visible; animation: icon-map-pin 4.8s ease-in-out infinite; }
 .whatsapp-icon > path:last-child { transform-origin: 16px 16px; animation: icon-phone 5.2s ease-in-out infinite; }
 .text-link > svg:last-child:not(.google-maps-icon), .gift-choice-action svg, .surprise-whatsapp > svg:last-child { transition: transform .25s ease; }
@@ -322,11 +330,11 @@
 .program-icon:not(.icon-in-view) *, .theme-icon:not(.icon-in-view) *, .closing-icon:not(.icon-in-view) *, .google-maps-icon:not(.icon-in-view), .whatsapp-icon:not(.icon-in-view) * { animation-play-state: paused; }
 @keyframes icon-bell { 0%, 12%, 42%, 100% { transform: rotate(0); } 18%, 30% { transform: rotate(22deg); } 24%, 36% { transform: rotate(-18deg); } }
 @keyframes icon-window { 0%, 15%, 85%, 100% { opacity: .04; } 35%, 60% { opacity: .28; } }
-@keyframes icon-toast-left { 0%, 15%, 55%, 100% { transform: rotate(0); } 30%, 40% { transform: rotate(12deg); } }
-@keyframes icon-toast-right { 0%, 15%, 55%, 100% { transform: rotate(0); } 30%, 40% { transform: rotate(-12deg); } }
+@keyframes icon-toast-left { 0%, 15%, 55%, 100% { transform: rotate(13deg); } 30%, 40% { transform: rotate(20deg); } }
+@keyframes icon-toast-right { 0%, 15%, 55%, 100% { transform: rotate(-13deg); } 30%, 40% { transform: rotate(-20deg); } }
 @keyframes icon-notes { 0%, 12%, 65%, 100% { transform: translateY(0); opacity: .65; } 35% { transform: translateY(-4px); opacity: 1; } }
 @keyframes icon-twinkle { 0%, 18%, 65%, 100% { opacity: .2; } 34%, 42% { opacity: 1; } }
-@keyframes icon-trees { 0%, 100% { transform: skewX(-1.5deg); } 50% { transform: skewX(1.5deg); } }
+@keyframes icon-trees { 0%, 100% { transform: skewX(-.6deg); } 50% { transform: skewX(.6deg); } }
 @keyframes icon-firefly { 0%, 100% { transform: translate(0, 0); opacity: .2; } 35% { opacity: 1; } 60% { transform: translate(3px, -4px); opacity: .8; } }
 @keyframes icon-shirt { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
 @keyframes icon-freedom { 0%, 20%, 65%, 100% { transform: scale(1); } 40% { transform: scale(1.09); } }
@@ -339,4 +347,7 @@
 @media (prefers-reduced-motion: reduce) {
   .wedding-page *, .invitation-loader * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .gold-points { opacity: .5; }
+  .party-glass-left { transform: rotate(13deg); }
+  .party-glass-right { transform: rotate(-13deg); }
+  .venue-light { opacity: .2; }
 }
