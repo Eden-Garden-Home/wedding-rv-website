@@ -4,6 +4,34 @@
 
 ### Wedding prototype decisions
 
+- Scroll choreography (8 November 2026): progressively reveal the dotted program route following the scroll viewport, then introduce stops/copy/Polaroids with short easing, without blocking scroll or hiding accessible content. Add distinct visible-only watercolor motion for the dress, Patagonia lake and RSVP letter. Honor reduced motion with static, fully visible content.
+
+- Closing section alignment (8 November 2026): center the surprise copy/contact/WhatsApp action and gift copy/Patagonia card/bank detail, with balanced headings and stationery spacing. Clip each watercolor atlas icon explicitly to its own source rectangle so wide SVG viewports cannot expose neighboring artwork, especially the RSVP envelope.
+
+- Watercolor icon family (8 November 2026): coordinate church, venue, champagne, dress, Patagonia, RSVP envelope, map pin and WhatsApp with the wooden sign's soft watercolor palette, using transparent artwork. Keep small action arrows/check/copy controls crisp. Reduce the program-to-woodland gap by 77px (theme margin-top 24px, padding-top 12px).
+
+- Sign layer refinement (8 November 2026): use independent transparent `woodland-sign-post.png` and `woodland-sign-board.png` layers. The post has continuous reconstructed grain behind the board; avoid polygon clipping and stretched texture patches, which leave visible seams during motion.
+
+- Woodland sign entrance (8 November 2026): animate the original watercolor post falling first, followed 300ms later by the arrow board, with a small bounce and settling rotation. Trigger once 180px before the emblem enters the scroll viewport, preserve layout and show the complete static sign with reduced motion.
+
+- Woodland section emblem (8 November 2026): remove the “Il nostro bosco incantato” eyebrow/divider. Replace the forest line icon with a centered transparent watercolor wooden V ♡ R sign adapted from the stationery, using `public/assets/wedding/woodland-sign-vr.png`.
+
+- Entrance responsiveness (8 November 2026): start handwriting as soon as the seal opens, concurrently with the envelope fade. Unlock the invitation and scrolling during opening; never wait for handwriting or photo landing to permit interaction. This supersedes the earlier inert-until-reveal rule.
+
+- Hero Polaroid entrance (8 November 2026): release the two original photo prints 380ms before handwriting finishes, staggered by 160ms. Animate an accelerating drop with a 13px rebound and 2px settling bounce, ending at the approved positions and rotations. Keep layout space reserved and show static photos immediately with reduced motion.
+
+- Signature timing (8 November 2026): keep the fountain-pen entrance fast, approximately three seconds including pen lifts and fade, to avoid making guests wait.
+
+- Signature entrance (8 November 2026): after the envelope reveal, a green-and-gold fountain pen traces the supplied Cherolina glyph outlines once, revealing rose ink across both names. Preserve the accessible heading and stable hero dimensions; reduced-motion users see the completed signature immediately. Generated outlines live in `src/signature-paths.json`, reproducible with `scripts/build-signature.py` and the original font.
+
+- Hero and woodland alignment (8 November 2026): remove the section menu and hamburger trigger; raise hero copy/collage and scroll arrow by 32px so the cue clears the home indicator. Center woodland story text, forest and dress icons, and the eyebrow divider.
+
+- Polaroid captions refinement (8 November 2026): use Cormorant Garamond semibold, matching the editorial titles, for all three captions. Remove the duplicated event titles above the photos, retaining timing labels and location copy.
+
+- Program photo treatment (8 November 2026): remove the visible program eyebrow and the separate address disclosure (and its menu entry). Keep Maps links in the timeline. Frame church, venue video and party image as square Polaroids with generous lower borders and Cherolina captions: “Il nostro Sì!”, “Ricevimento”, “Musica e Festa”.
+
+- Typography (8 November 2026): match the approved stationery hierarchy: Cherolina for couple names, Cormorant Garamond for editorial titles, date and prose, Cutive Mono for addresses, times, labels and functional controls; Cormorant italic for the short RSVP invitation. Preview locally before any PR or publication.
+
 - Approved copy (2 November 2026): use “Maggio”, “Il nostro Sì!”, “A seguire / Il Ricevimento”, “Il Fondaco dei Mercanti”, “Benvenuti nel Bosco Incantato” and the supplied two-paragraph woodland/amore explanation. Surprise heading and navigation are “Dediche e sorprese” (no additional icon needed). Gift section uses the supplied thoughtful-gifts introduction and “Verso la fine del mondo” for Patagonia, including the bank detail view.
 
 - Copy voice (2 November 2026, revised): use second-person plural (voi) in editorial invitation text; use second-person singular (tu) for buttons, action links, operational instructions, errors prompting an action and their accessible labels (e.g. “Tocca il sigillo”, “Apri Google Maps”, “Salva le risposte”). Keep neutral attendance labels for individual RSVP rows.

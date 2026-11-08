@@ -1,5 +1,7 @@
 :root {
   --wedding-text-font: "Cutive Mono", "Courier New", monospace;
+  --wedding-editorial-font: "Cormorant Garamond", Georgia, serif;
+  --wedding-ink-rose: #a96875;
   --wedding-cream: #f8f3e8;
   --wedding-green: #293e30;
   --wedding-sage: #87907b;
@@ -26,7 +28,7 @@
   background: var(--wedding-cream) url("/assets/wedding/paper-texture.png") repeat;
   background-size: 390px auto;
   border-inline: 12px solid var(--wedding-rose);
-  font: 400 17px/1.5 var(--wedding-text-font);
+  font: 500 20px/1.5 var(--wedding-editorial-font);
   -webkit-font-smoothing: antialiased;
 }
 .wedding-page *, .invitation-loader * { box-sizing: border-box; }
@@ -36,7 +38,7 @@
 .wedding-page button, .wedding-page a { color: inherit; }
 .wedding-page button { cursor: pointer; font: inherit; }
 .wedding-page button:focus-visible, .wedding-page a:focus-visible, .wedding-page summary:focus-visible,
-.invitation-loader button:focus-visible, .sheet-menu button:focus-visible { outline: 2px solid var(--wedding-green); outline-offset: 5px; }
+.invitation-loader button:focus-visible { outline: 2px solid var(--wedding-green); outline-offset: 5px; }
 .wedding-page img, .wedding-page video { display: block; user-select: none; -webkit-user-drag: none; }
 .wedding-page section[id] { scroll-margin-top: 62px; }
 .wedding-page #programma { scroll-margin-top: 0; }
@@ -61,15 +63,17 @@
   padding-bottom: 64px;
   background: url("/assets/wedding/invitation-paper-v3.webp") center top / calc(100% + 24px) 100% no-repeat;
 }
-.hero-menu-button { position: absolute; top: 54px; left: 5px; z-index: 5; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; background: transparent; border: 0; }
-.hero-menu-button svg { width: 19px; height: 19px; }
-.hero-copy { position: relative; z-index: 2; padding: 132px 20px 0; text-align: center; }
+.hero-copy { position: relative; z-index: 2; padding: 100px 20px 0; text-align: center; }
 .eyebrow { font: 400 10px/1.5 var(--wedding-text-font); text-transform: uppercase; letter-spacing: .13em; }
 .eyebrow::after { display: block; width: 26px; height: 1px; margin-top: 16px; background: var(--wedding-sage); content: ""; }
 .hero-copy .eyebrow::after { margin-inline: auto; }
 .signature { display: flex; flex-direction: column; align-items: center; font: 400 86px/.79 "Cherolina", cursive; }
 .signature span { display: block; white-space: nowrap; }
 .signature span + span { margin-top: 6px; }
+.signature-writing { position: relative; }
+.signature-writing .signature-spacing { visibility: hidden; }
+.signature-ink { position: absolute; top: -.2em; left: 50%; width: 4.18605em; height: 1.97674em; transform: translateX(-50%); overflow: visible; pointer-events: none; }
+.fountain-pen { filter: drop-shadow(2px 3px 2px rgb(61 45 25 / .18)); }
 .hero-copy h1 { margin: 24px -12px 22px; }
 .wedding-date { font-size: 18px; line-height: 1.5; letter-spacing: 0; }
 .wedding-date time, .wedding-date span { display: block; }
@@ -93,7 +97,23 @@
 .original-polaroid img { width: 100%; height: auto; filter: drop-shadow(0 3px 3px rgb(74 56 36 / .14)); }
 .polaroid-kiss { top: -8px; left: -4%; transform: rotate(-6deg); }
 .polaroid-ring { top: 70px; right: -4%; transform: rotate(6deg); }
-.scroll-invitation-cue { position: absolute; z-index: 3; left: calc(50% - 32px); bottom: 9px; display: grid; place-items: center; width: 64px; height: 52px; padding: 0; border: 0; background: transparent; color: var(--wedding-sage) !important; }
+.polaroid-kiss { --rest-angle: -6deg; --entry-angle: -17deg; --entry-x: -32px; --rebound-angle: -4deg; --settle-angle: -6.6deg; }
+.polaroid-ring { --rest-angle: 6deg; --entry-angle: 19deg; --entry-x: 36px; --rebound-angle: 4deg; --settle-angle: 6.6deg; }
+.polaroid-collage[data-arrival="waiting"] .original-polaroid { opacity: 0; }
+.polaroid-collage[data-arrival="falling"] .original-polaroid { animation: polaroid-arrival 1.25s both; }
+.polaroid-collage[data-arrival="falling"] .polaroid-ring { animation-delay: .16s; }
+/* Accelerating fall, short rebound and two progressively smaller contacts.
+   Final transform is exactly the original collage placement. */
+@keyframes polaroid-arrival {
+  0% { opacity: 0; transform: translate3d(var(--entry-x), -900px, 0) rotate(var(--entry-angle)); animation-timing-function: cubic-bezier(.55, .05, .9, .55); }
+  10% { opacity: 1; transform: translate3d(var(--entry-x), -870px, 0) rotate(var(--entry-angle)); animation-timing-function: cubic-bezier(.55, .05, .9, .55); }
+  66% { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--rest-angle)); animation-timing-function: cubic-bezier(.15, .65, .35, 1); }
+  78% { transform: translate3d(0, -13px, 0) rotate(var(--rebound-angle)); animation-timing-function: cubic-bezier(.55, 0, .85, .4); }
+  89% { transform: translate3d(0, 0, 0) rotate(var(--settle-angle)); animation-timing-function: ease-out; }
+  95% { transform: translate3d(0, -2px, 0) rotate(var(--rest-angle)); animation-timing-function: ease-in; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--rest-angle)); }
+}
+.scroll-invitation-cue { position: absolute; z-index: 3; left: calc(50% - 32px); bottom: 41px; display: grid; place-items: center; width: 64px; height: 52px; padding: 0; border: 0; background: transparent; color: var(--wedding-sage) !important; }
 .scroll-invitation-cue svg { width: 46px; height: 46px; opacity: .74; stroke: currentColor; stroke-width: .65; animation: arrow-drift 2s ease-in-out infinite; }
 @keyframes arrow-drift { 0%, 100% { transform: translateY(-4px); opacity: .55; } 50% { transform: translateY(4px); opacity: .85; } }
 @keyframes points-breathe { 0%, 22% { opacity: .2; } 70%, 100% { opacity: .85; } }
@@ -101,7 +121,7 @@
 .day-section { position: relative; min-height: 823px; padding: 102px 49px 62px 38px; }
 .section-heading, .day-timeline { position: relative; z-index: 2; }
 .points-program { bottom: 12px; left: -3px; animation-delay: -1.3s; }
-.day-timeline { position: relative; padding: 0; margin: 42px 0 0; list-style: none; }
+.day-timeline { position: relative; padding: 0; margin: 0; list-style: none; }
 .timeline-route { position: absolute; top: 0; left: 0; width: 62px; height: 100%; overflow: visible; pointer-events: none; }
 .timeline-route path { fill: none; stroke: color-mix(in srgb, var(--wedding-sage) 72%, transparent); stroke-width: 1.35; stroke-linecap: round; stroke-dasharray: 2.5 5; vector-effect: non-scaling-stroke; }
 .day-timeline li { position: relative; display: grid; grid-template-columns: 61px minmax(0, 1fr); gap: 17px; padding: 22px 0; border-bottom: 1px solid var(--wedding-hairline); }
@@ -116,8 +136,9 @@
 .day-timeline h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.03em; }
 .day-timeline h3 > * { display: block; }
 .day-timeline p { margin-top: 8px; font-size: 16px; line-height: 1.45; }
-.wedding-page .program-photo { margin-top: 18px; margin-bottom: 6px; padding: 5px; background: var(--wedding-white); box-shadow: 0 3px 8px rgb(74 56 36 / .15); transform: rotate(-2deg); }
-.program-photo img, .program-photo video { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.wedding-page .program-photo { margin-top: 22px; margin-bottom: 12px; padding: 9px 9px 0; background: #fffaf2 url("/assets/wedding/paper-texture.png") center / 390px auto; box-shadow: 0 3px 8px rgb(74 56 36 / .15); transform: rotate(-3deg); }
+.program-photo img, .program-photo video { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.program-photo figcaption { display: grid; place-items: center; min-height: 54px; padding: 8px 2px 12px; color: var(--wedding-green); font: 600 25px/1.2 var(--wedding-editorial-font); text-align: center; }
 .program-photo-church img { object-position: center 30%; }
 .wedding-page .program-photo-venue { transform: rotate(2deg); }
 .program-photo-party img { object-position: center bottom; }
@@ -141,7 +162,7 @@
 .place-list h3 { font-size: 21px; line-height: 1.3; }
 .place-list p { margin-top: 8px; font-size: 16px; }
 
-.theme-section { position: relative; margin: 72px 36px 0; padding: 41px 20px 39px; }
+.theme-section { position: relative; margin: 24px 36px 0; padding: 12px 20px 39px; }
 .theme-section h2 { margin-top: 20px; font: 400 32px/1.16 var(--wedding-text-font); letter-spacing: -.045em; }
 .theme-section > p:not(.eyebrow) { margin-top: 21px; font-size: 15px; line-height: 1.58; }
 .theme-dress { margin-top: 28px; padding: 20px 0; border-block: 1px solid var(--wedding-hairline); }
@@ -242,13 +263,34 @@
 .invitation-footer .signature { font-size: 48px; line-height: .76; }
 .points-closing-left { bottom: 20px; left: -2px; animation-delay: -2s; }
 .points-closing-right { bottom: 116px; right: -3px; animation-delay: -4.4s; }
-.sheet-menu { padding: 4px 6px 20px; color: var(--wedding-green); }
-.sheet-menu button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 55px; padding: 12px 0; background: transparent; border: 0; border-bottom: 1px solid var(--wedding-hairline); color: inherit; font: 400 20px/1.35 var(--wedding-text-font); cursor: pointer; text-align: left; }
-.sheet-menu svg { width: 18px; height: 18px; }
+
+/* Stationery typography: signature, editorial serif, then typewriter details. */
+.signature { color: var(--wedding-ink-rose); }
+.wedding-date time { color: var(--wedding-ink-rose); font: 400 30px/1.25 var(--wedding-editorial-font); }
+.wedding-date span { margin-top: 5px; font: 400 16px/1.5 var(--wedding-text-font); color: var(--wedding-muted); }
+.wedding-page h2, .wedding-page h3, .gift-choice strong {
+  font-family: var(--wedding-editorial-font);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.theme-section h2, .surprise-section h2, .gift-section h2 { font-size: 34px; line-height: 1.1; }
+.day-timeline h3 { font-size: 28px; line-height: 1.15; }
+.day-timeline h3 > :first-child { margin-bottom: 7px; color: var(--wedding-muted); font: 400 14px/1.45 var(--wedding-text-font); }
+.day-timeline p { font-size: 21px; line-height: 1.3; }
+.place-list h3 { font-size: 26px; }
+.place-list p { color: var(--wedding-muted); font: 400 15px/1.65 var(--wedding-text-font); }
+.theme-section > p:not(.eyebrow), .theme-dress p:last-child, .surprise-copy, .gift-copy { font-size: 20px; line-height: 1.5; }
+.surprise-contact-name { font-size: 28px; font-weight: 600; }
+.gift-choice strong { font-size: 28px; line-height: 1.15; }
+.gift-choice-description { font-size: 19px; }
+.final-rsvp > p { font: 500 italic 21px/1.45 var(--wedding-editorial-font); }
+.text-link, .location-details > summary, .rsvp-form, .rsvp-ready,
+.rsvp-unavailable, .privacy-note, .wedding-page .primary-action,
+.wedding-page .secondary-action { font-family: var(--wedding-text-font); }
 
 /* Scale inside the protected device, never from the desktop canvas width. */
 [data-device="pixel-10"] .invitation-hero { min-height: 904px; }
-[data-device="pixel-10"] .hero-copy { padding-top: 160px; }
+[data-device="pixel-10"] .hero-copy { padding-top: 128px; }
 [data-device="pixel-10"] .media-collage { margin-top: 36px; height: 354px; }
 [data-device="pixel-10"] .church-photo { height: 221px; }
 [data-device="pixel-10"] .venue-photo { height: 168px; }
@@ -278,7 +320,7 @@
   .mobile-app-viewport[data-platform="android"][data-keyboard-visible="false"] { bottom: 0; }
   .wedding-page { padding-bottom: env(safe-area-inset-bottom, 0px); }
   .invitation-hero { min-height: max(760px, 100dvh) !important; }
-  .hero-copy { padding-top: 116px !important; }
+  .hero-copy { padding-top: 84px !important; }
 }
 
 @media (max-width: 370px) {
@@ -326,7 +368,6 @@
 .whatsapp-icon > path:last-child { transform-origin: 16px 16px; animation: icon-phone 5.2s ease-in-out infinite; }
 .text-link > svg:last-child:not(.google-maps-icon), .gift-choice-action svg, .surprise-whatsapp > svg:last-child { transition: transform .25s ease; }
 .text-link:hover > svg:last-child:not(.google-maps-icon), .gift-choice:hover .gift-choice-action svg, .surprise-whatsapp:hover > svg:last-child { transform: translate(2px, -2px); }
-.hero-menu-button:hover svg { transform: rotate(8deg); transition: transform .25s ease; }
 .program-icon:not(.icon-in-view) *, .theme-icon:not(.icon-in-view) *, .closing-icon:not(.icon-in-view) *, .google-maps-icon:not(.icon-in-view), .whatsapp-icon:not(.icon-in-view) * { animation-play-state: paused; }
 @keyframes icon-bell { 0%, 12%, 42%, 100% { transform: rotate(0); } 18%, 30% { transform: rotate(22deg); } 24%, 36% { transform: rotate(-18deg); } }
 @keyframes icon-window { 0%, 15%, 85%, 100% { opacity: .04; } 35%, 60% { opacity: .28; } }
@@ -345,9 +386,83 @@
 @keyframes icon-phone { 0%, 15%, 45%, 100% { transform: rotate(0); } 21%, 33% { transform: rotate(10deg); } 27%, 39% { transform: rotate(-10deg); } }
 
 @media (prefers-reduced-motion: reduce) {
+  .polaroid-collage .original-polaroid { opacity: 1; }
   .wedding-page *, .invitation-loader * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .gold-points { opacity: .5; }
   .party-glass-left { transform: rotate(13deg); }
   .party-glass-right { transform: rotate(-13deg); }
   .venue-light { opacity: .2; }
+}
+
+/* Center the woodland story and dress guidance as one editorial section. */
+.theme-section { text-align: center; }
+.woodland-sign { display: block; width: 164px; height: auto; margin: 0 auto 24px; overflow: visible; }
+.woodland-sign-post { transform-origin: 595px 990px; }
+.woodland-sign-board { transform-origin: 618px 492px; }
+.woodland-sign[data-arrival="waiting"] > g { opacity: 0; }
+.woodland-sign[data-arrival="falling"] .woodland-sign-post { animation: sign-post-drop 760ms both; }
+.woodland-sign[data-arrival="falling"] .woodland-sign-board { animation: sign-board-drop 850ms 300ms both; }
+@keyframes sign-post-drop {
+  0% { opacity: 0; transform: translateY(-700px) rotate(-5deg); animation-timing-function: cubic-bezier(.4,0,.85,.5); }
+  12% { opacity: 1; }
+  60% { transform: translateY(6px) rotate(1deg); animation-timing-function: ease-out; }
+  76% { transform: translateY(-28px) rotate(-1deg); animation-timing-function: ease-in; }
+  88% { transform: translateY(0) rotate(.4deg); animation-timing-function: ease-out; }
+  100% { opacity: 1; transform: translateY(0) rotate(0); }
+}
+@keyframes sign-board-drop {
+  0% { opacity: 0; transform: translateY(-850px) rotate(9deg); animation-timing-function: cubic-bezier(.4,0,.85,.5); }
+  10% { opacity: 1; }
+  56% { transform: translateY(8px) rotate(-4deg); animation-timing-function: ease-out; }
+  71% { transform: translateY(-35px) rotate(2.5deg); animation-timing-function: ease-in; }
+  83% { transform: translateY(0) rotate(-1.2deg); animation-timing-function: ease-out; }
+  93% { transform: translateY(-5px) rotate(.5deg); animation-timing-function: ease-in-out; }
+  100% { opacity: 1; transform: translateY(0) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) { .woodland-sign > g { opacity: 1 !important; transform: none !important; } }
+.theme-section .theme-icon, .theme-section .eyebrow::after { margin-inline: auto; }
+.watercolor-icon { overflow: hidden; }
+.program-icon.watercolor-icon { width: 68px; height: 76px; }
+.dress-icon.watercolor-icon { width: 104px; height: 116px; }
+.closing-icon.watercolor-icon { width: 124px; height: 100px; }
+.watercolor-icon > g > image { transform-box: fill-box; transform-origin: center; animation: watercolor-breathe 5s ease-in-out infinite; }
+@keyframes watercolor-breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+/* Carry the centered stationery composition through the closing sections. */
+.surprise-section { margin-top: 32px; padding-top: 24px; text-align: center; }
+.invitation-closing { padding-top: 48px; text-align: center; }
+.surprise-section h2, .gift-section h2 { text-wrap: balance; }
+.surprise-copy, .gift-copy { text-wrap: pretty; }
+.surprise-contact { margin-top: 24px; }
+.surprise-contact-name { color: var(--wedding-ink-rose); }
+.surprise-whatsapp { justify-content: center; gap: 9px; }
+.surprise-whatsapp span { flex: 0 1 auto; }
+.surprise-whatsapp svg:last-child { margin-left: 0; }
+.gift-choice { align-items: center; text-align: center; padding: 24px 18px 20px; }
+.gift-choice strong { text-wrap: balance; }
+.gift-choice-description { max-width: 240px; }
+.gift-choice-action { justify-content: center; padding-top: 20px; }
+.gift-section .closing-icon, .gift-detail .eyebrow::after { margin-inline: auto; }
+.gift-detail .text-link { justify-content: center; }
+.final-rsvp .closing-icon { width: 112px; height: 112px; margin-bottom: 20px; }
+/* Scroll-led route construction: reveal only compositor-friendly transforms. */
+.route-building li > div { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .65s cubic-bezier(.16,1,.3,1); }
+.route-building .timeline-stop { opacity: 0; scale: .6; transition: opacity .3s ease, scale .55s cubic-bezier(.2,1.5,.4,1); }
+.route-building .stop-arrived > div { opacity: 1; transform: translateY(0); }
+.route-building .stop-arrived .timeline-stop { opacity: 1; scale: 1; }
+.route-building .program-photo { opacity: 0; translate: 0 18px; transition: opacity .6s .1s ease, translate .75s .1s cubic-bezier(.16,1,.3,1); }
+.route-building .stop-arrived .program-photo { opacity: 1; translate: 0 0; }
+.watercolor-art { transform-box: view-box; }
+.watercolor-art-dress { transform-origin: 1325px 105px; animation: dress-fabric 4.6s ease-in-out infinite; }
+.watercolor-art-patagonia { transform-origin: 200px 920px; animation: landscape-depth 7s ease-in-out infinite; }
+.watercolor-water { animation: lake-reflections 3.8s ease-in-out infinite; }
+.watercolor-art-rsvp { transform-origin: 580px 890px; animation: envelope-sway 5s ease-in-out infinite; }
+.watercolor-letter { overflow: hidden; animation: letter-rise 5s ease-in-out infinite; }
+@keyframes dress-fabric { 0%,100% { transform: rotate(-1.5deg) skewX(-.8deg); } 50% { transform: rotate(1.5deg) skewX(.8deg); } }
+@keyframes landscape-depth { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-3px) scale(1.018); } }
+@keyframes lake-reflections { 0%,100% { opacity: .1; transform: translateX(-5px); } 50% { opacity: .6; transform: translateX(5px); } }
+@keyframes envelope-sway { 0%,20%,80%,100% { transform: rotate(0); } 40% { transform: rotate(-1.2deg); } 60% { transform: rotate(1.2deg); } }
+@keyframes letter-rise { 0%,15%,85%,100% { transform: translateY(0); } 40%,60% { transform: translateY(-16px); } }
+@media (prefers-reduced-motion: reduce) {
+  .route-building li > div, .route-building .timeline-stop, .route-building .program-photo { opacity: 1; transform: none; scale: 1; translate: none; }
 }
