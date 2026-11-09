@@ -49,9 +49,9 @@
 .invitation-loader[data-phase="opening"] { pointer-events: none; animation: envelope-release 1250ms cubic-bezier(.2, .7, .2, 1) forwards; }
 .envelope-closed { width: 100%; height: 100%; object-fit: cover; }
 .seal-trigger { position: absolute; top: 50%; left: 50%; width: 142px; height: 142px; padding: 0; transform: translate(-50%, -50%); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
-.seal-trigger:disabled { visibility: hidden; }
+.seal-trigger:disabled { cursor: default; }
 .loader-caption { position: absolute; top: calc(50% + 98px); right: 18px; left: 18px; text-align: center; }
-.loader-recipient { margin: 0 0 12px; color: #fff; font: 400 22px/1.4 var(--wedding-text-font); text-shadow: 0 1px 3px rgb(74 39 34 / .3); text-wrap: balance; }
+.loader-recipient { margin: 0 0 12px; color: #fff; font: 400 22px/1.35 var(--wedding-text-font); text-shadow: 0 1px 3px rgb(74 39 34 / .3); text-wrap: balance; }
 .loader-hint { margin: 0; color: #fff; font: 400 22px/1.35 var(--wedding-text-font); text-shadow: 0 1px 3px rgb(74 39 34 / .3); animation: seal-hint-pulse 2.2s ease-in-out infinite; }
 @keyframes envelope-release { 0% { opacity: 1; } 30% { opacity: .96; } 100% { opacity: 0; transform: translateY(-12px) scale(1.025); } }
 @keyframes seal-hint-pulse { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
@@ -254,11 +254,7 @@
 .rsvp-error { margin: 14px 0 0 !important; color: #a33b34; font-size: 12px !important; }
 .rsvp-success { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--wedding-green); font-size: 14px !important; }
 .rsvp-success svg { width: 19px; height: 19px; }
-.rsvp-existing { margin-top: 14px !important; color: var(--wedding-muted); font-size: 12px !important; line-height: 1.5 !important; }
 .rsvp-unavailable { margin-top: 23px !important; color: var(--wedding-muted); font-size: 13px !important; line-height: 1.5 !important; }
-.privacy-note { margin-top: 32px; color: var(--wedding-muted); text-align: center; }
-.privacy-note summary { padding: 10px 0; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
-.privacy-note p { margin-top: 8px !important; font-size: 11px; line-height: 1.5; text-align: left; }
 .invitation-footer { margin-top: 70px; padding-bottom: 2px; }
 .invitation-footer .signature { font-size: 48px; line-height: .76; }
 .points-closing-left { bottom: 20px; left: -2px; animation-delay: -2s; }
@@ -285,7 +281,7 @@
 .gift-choice-description { font-size: 19px; }
 .final-rsvp > p { font: 500 italic 21px/1.45 var(--wedding-editorial-font); }
 .text-link, .location-details > summary, .rsvp-form, .rsvp-ready,
-.rsvp-unavailable, .privacy-note, .wedding-page .primary-action,
+.rsvp-unavailable, .wedding-page .primary-action,
 .wedding-page .secondary-action { font-family: var(--wedding-text-font); }
 
 /* Scale inside the protected device, never from the desktop canvas width. */
@@ -497,3 +493,36 @@
 .gift-choice-action { width: auto; margin-top: 23px; padding: 12px 14px; gap: 10px; min-height: 44px; border-radius: 2px; background: #e5e9d9; color: var(--wedding-green); font-size: 12px; letter-spacing: .025em; text-transform: none; }
 .gift-choice:hover { background: #fffaf1 url('/assets/wedding/paper-texture.png') center / 390px auto; box-shadow: 0 8px 20px rgb(85 64 40 / .12); translate: 0 -2px; }
 .gift-choice:active { translate: 0 0; }
+
+/* The wax scales with the covered envelope artwork, including tall phones. */
+.invitation-loader { container-type: size; }
+.seal-trigger { left: 49.5%; top: 50.2%; width: max(33cqw, 18.57cqh); height: max(33cqw, 18.57cqh); background: transparent; border: 0; box-shadow: none; display: grid; place-items: center; }
+/* Diagonal, interlaced composition follows the original envelope stamp. */
+.wax-monogram { position: relative; display: block; width: 1.08em; height: 1.2em; color: #d1af99; font: 400 max(15.5cqw, 8.72cqh)/1 "Cherolina", cursive; text-shadow: 0 1px 1px #fff3e4, 0 -1px 1px #94705d; }
+.wax-monogram > span { position: absolute; display: block; -webkit-text-stroke: .65px currentColor; paint-order: stroke fill; }
+.wax-v { top: 0; left: -.02em; }
+.wax-amp { top: .91em; left: .72em; font-size: .5em; }
+.wax-r { top: .25em; right: -.01em; }
+.loader-recipient, .loader-hint { color: #fff; font: 400 22px/1.35 var(--wedding-text-font); text-shadow: 0 1px 3px rgb(74 39 34 / .3); }
+
+/* RSVP stationery: editorial names and tactile sage choices on ivory paper. */
+.rsvp-form { margin-top: 30px; }
+.rsvp-form .rsvp-intro { max-width: 30ch; margin: 0 auto 26px !important; text-align: center; font: 500 19px/1.4 var(--wedding-editorial-font) !important; }
+.rsvp-person { position: relative; margin-block: 18px; padding: 22px 16px 20px; border: 1px solid #cba09966; border-top: 3px solid #cba099; background: rgb(255 250 240 / .6); box-shadow: 0 4px 12px #55472b08; }
+.rsvp-person > .rsvp-person-name { font: 600 27px/1.15 var(--wedding-editorial-font); overflow-wrap: anywhere; }
+.rsvp-options { gap: 8px; margin-top: 20px; }
+.rsvp-options button { min-height: 48px; padding: 10px 6px; font-size: 13px; border-color: #87907b88; background: transparent; }
+.rsvp-options button > span { display: inline-block; margin-right: 2px; }
+.rsvp-options button.selected { background: var(--wedding-green); color: var(--wedding-white); border-color: var(--wedding-green); box-shadow: 0 2px 4px #293e301a; }
+.rsvp-meal { margin-top: 22px; padding: 19px 0 0; border: 0; border-top: 1px solid #87907b44; background: transparent; }
+.rsvp-meal .small-label { font: 600 19px/1.2 var(--wedding-editorial-font); text-transform: none; letter-spacing: 0; }
+.meal-choices { gap: 8px; margin-top: 14px; }
+.meal-choices button { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px; font-size: 12px; border-color: transparent; background: #87907b0a; }
+.meal-choices button::before { content: ""; flex: 0 0 14px; height: 14px; border: 1px solid var(--wedding-sage); border-radius: 50%; }
+.meal-choices button.selected { background: #e4e8dc; border-color: #87907b88; }
+.meal-choices button.selected::before { background: var(--wedding-green); box-shadow: inset 0 0 0 3px #e4e8dc; border-color: var(--wedding-green); }
+.meal-note { font: 500 17px/1.35 var(--wedding-editorial-font); }
+.meal-note textarea { padding: 12px; background: #fffaf0a6; border-color: #87907b88; }
+.child-menu { align-items: center; min-height: 44px; margin-top: 12px; font-size: 12px; }
+.rsvp-form > .primary-action { min-height: 52px; margin-top: 12px; font-size: 14px !important; }
+.rsvp-form > .secondary-action { min-height: 44px; }

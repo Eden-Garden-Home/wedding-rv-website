@@ -165,3 +165,9 @@ When any text-entry control loses focus, dismiss the simulated keyboard. If the 
 
 - Action styling (9 November 2026): remove horizontal rules between program stops. Restyle WhatsApp as a soft sage action with a readable editorial title and typewriter sublabel; style the Patagonia choice as textured stationery with a larger watercolor and a distinct sage coordinate action.
 
+
+- Browser refinements (9 November 2026): match recipients exactly to the hint typography; render the wax monogram in the supplied Cherolina font. Remove the three program illustrations while retaining route stops and a continuous dotted path. Remove “Come vestirsi”, the resting RSVP household summary and the footer privacy disclosure. Always label the RSVP entry “Conferma Presenza”. Style the inline per-person form as ivory stationery with rose edges, editorial names and sage/green accessible choices; preserve server persistence, dietary notes and child menus. No deployment requested.
+
+- Wax correction (9 November 2026): the smooth CSS wax disk was rejected as artificial. Use the textured envelope artwork with its original irregular wax rim and a smaller Cherolina monogram impressed into the blank face; do not redraw the seal as CSS gradients.
+
+- Wax monogram layout (9 November 2026): follow the original diagonal stamp composition, with V upper-left, a smaller central ampersand and R lower-right, rather than placing all three characters on one baseline. Preserve Cherolina and the textured wax artwork.

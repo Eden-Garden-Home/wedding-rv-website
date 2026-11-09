@@ -49,9 +49,6 @@ function WatercolorIcon({ kind, className }: { kind: keyof typeof watercolorView
     </g>
   </svg>;
 }
-function ProgramIcon({ kind }: { kind: "church" | "venue" | "party" }) {
-  return <WatercolorIcon kind={kind} className={`program-icon program-icon-${kind}`} />;
-}
 function WhatsAppIcon() {
   return <WatercolorIcon kind="whatsapp" className="whatsapp-icon" />;
 }
@@ -348,7 +345,7 @@ export default function Prototype() {
       const secondMid = (second.y + third.y) / 2;
       const height = timeline.offsetHeight;
       const path = `M ${first.x} ${Math.max(0, first.y - 18)} L ${first.x} ${first.y} C ${first.x} ${firstMid} ${second.x} ${firstMid} ${second.x} ${second.y} C ${second.x} ${secondMid} ${third.x} ${secondMid} ${third.x} ${third.y} L ${third.x} ${Math.min(height, third.y + 58)}`;
-      setTimelineRoute({ height, path, gaps: points.map((point) => point.y + 22) });
+      setTimelineRoute({ height, path, gaps: [] });
     };
     const observer = new ResizeObserver(measureRoute);
     observer.observe(timeline);
@@ -444,8 +441,8 @@ export default function Prototype() {
     <>
       {loaderPhase !== "hidden" && (
         <div className="invitation-loader" data-phase={loaderPhase} role="dialog" aria-modal={loaderPhase === "closed"} aria-hidden={loaderPhase === "opening"} aria-label="Apertura dell'invito">
-          <img className="envelope-closed" src="/assets/wedding/invitation-envelope-closed.webp" alt="Busta rosa con sigillo in ceralacca V e R" draggable="false" />
-          <button type="button" className="seal-trigger" aria-label="Apri l'invito" autoFocus disabled={loaderPhase !== "closed"} onClick={() => { track("envelope_opened"); setLoaderPhase("opening"); }} />
+          <img className="envelope-closed" src="/assets/wedding/invitation-envelope-blank-wax.png" alt="Busta rosa con sigillo in ceralacca V e R" draggable="false" />
+          <button type="button" className="seal-trigger" aria-label="Apri l'invito" autoFocus disabled={loaderPhase !== "closed"} onClick={() => { track("envelope_opened"); setLoaderPhase("opening"); }}><span className="wax-monogram" aria-hidden="true"><span className="wax-v">V</span><span className="wax-amp">&amp;</span><span className="wax-r">R</span></span></button>
           {loaderPhase === "closed" && <div className="loader-caption">{invitation && <p className="loader-recipient">{invitation.displayName}</p>}<p className="loader-hint">Tocca il sigillo</p></div>}
         </div>
       )}
@@ -470,9 +467,9 @@ export default function Prototype() {
             <GoldPoints className="points-program" />
             <ol className="day-timeline" ref={timelineRef}>
               <svg className="timeline-route" viewBox={`0 0 62 ${timelineRoute.height}`} preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id={`${routeMaskId}-reveal`}><rect className="route-reveal" width="62" height="100%" /></clipPath><mask id={routeMaskId} maskUnits="userSpaceOnUse" x="0" y="0" width="62" height={timelineRoute.height}><rect width="62" height={timelineRoute.height} fill="white" />{timelineRoute.gaps.map((y, index) => <rect key={index} x="0" y={y} width="62" height="80" fill="black" />)}</mask></defs><g clipPath={`url(#${routeMaskId}-reveal)`}><path d={timelineRoute.path} mask={`url(#${routeMaskId})`} /></g></svg>
-              <li><span className="timeline-stop" aria-hidden="true"><ProgramIcon kind="church" /></span><div><h3><time dateTime="2027-05-22T15:00:00+02:00">15:00</time></h3><p>Chiesa di Santo Stefano<br />Segrate</p><MapsLink place="church" onClick={() => track("external_link_clicked", "church_maps")} /><figure className="program-photo program-photo-church"><img src="/assets/wedding/church.png" alt="Il campanile della Chiesa di Santo Stefano a Segrate" loading="lazy" draggable="false" /><figcaption>Il nostro Sì!</figcaption></figure></div></li>
-              <li><span className="timeline-stop" aria-hidden="true"><ProgramIcon kind="venue" /></span><div><h3><span>A seguire</span></h3><p>Il Fondaco dei Mercanti</p><MapsLink place="venue" onClick={() => track("external_link_clicked", "venue_maps")} /><figure className="program-photo program-photo-venue"><video ref={videoRef} src="/assets/wedding/fondaco.mp4" aria-label="Atmosfera del Fondaco dei Mercanti" autoPlay={!reducedMotion && loaderPhase === "hidden"} muted loop playsInline preload="metadata" /><figcaption>Ricevimento</figcaption></figure></div></li>
-              <li><span className="timeline-stop" aria-hidden="true"><ProgramIcon kind="party" /></span><div><h3><span>Fino a tardi</span></h3><p>Balliamo insieme<br />sotto le luci.</p><figure className="program-photo program-photo-party"><img src="/assets/wedding/dancing-lights.png" alt="Luci calde per festeggiare insieme" loading="lazy" draggable="false" /><figcaption>Musica e Festa</figcaption></figure></div></li>
+              <li><span className="timeline-stop" aria-hidden="true"></span><div><h3><time dateTime="2027-05-22T15:00:00+02:00">15:00</time></h3><p>Chiesa di Santo Stefano<br />Segrate</p><MapsLink place="church" onClick={() => track("external_link_clicked", "church_maps")} /><figure className="program-photo program-photo-church"><img src="/assets/wedding/church.png" alt="Il campanile della Chiesa di Santo Stefano a Segrate" loading="lazy" draggable="false" /><figcaption>Il nostro Sì!</figcaption></figure></div></li>
+              <li><span className="timeline-stop" aria-hidden="true"></span><div><h3><span>A seguire</span></h3><p>Il Fondaco dei Mercanti</p><MapsLink place="venue" onClick={() => track("external_link_clicked", "venue_maps")} /><figure className="program-photo program-photo-venue"><video ref={videoRef} src="/assets/wedding/fondaco.mp4" aria-label="Atmosfera del Fondaco dei Mercanti" autoPlay={!reducedMotion && loaderPhase === "hidden"} muted loop playsInline preload="metadata" /><figcaption>Ricevimento</figcaption></figure></div></li>
+              <li><span className="timeline-stop" aria-hidden="true"></span><div><h3><span>Fino a tardi</span></h3><p>Balliamo insieme<br />sotto le luci.</p><figure className="program-photo program-photo-party"><img src="/assets/wedding/dancing-lights.png" alt="Luci calde per festeggiare insieme" loading="lazy" draggable="false" /><figcaption>Musica e Festa</figcaption></figure></div></li>
             </ol>
           </section>
 
@@ -481,7 +478,7 @@ export default function Prototype() {
             <h2 id="tema-title">Benvenuti nel<br />Bosco Incantato</h2>
             <p>Abbiamo scelto il bosco come simbolo del nostro amore: un luogo in cui ogni elemento trova il proprio spazio, tra alberi, radici intrecciate, foglie mosse dal vento e sentieri che si incontrano.</p>
             <p>Un ambiente in cui ogni cosa, con la propria bellezza e unicità, contribuisce a creare qualcosa di speciale. Proprio come l’amore, che nasce dall’incontro di due mondi e cresce attraverso tutto ciò che si sceglie di condividere.</p>
-            <div className="theme-dress"><ThemeIcon /><p className="small-label">Come vestirsi</p><p>Nessun dress code e nessun colore tema: scegliete ciò che vi rappresenta e vi fa sentire belli, felici e luminosi.</p></div>
+            <div className="theme-dress"><ThemeIcon /><p>Nessun dress code e nessun colore tema: scegliete ciò che vi rappresenta e vi fa sentire belli, felici e luminosi.</p></div>
           </section>
 
           <section className="surprise-section" id="sorprese" aria-labelledby="sorprese-title">
@@ -538,14 +535,14 @@ export default function Prototype() {
               <p>Fateci sapere se festeggerete con noi.</p>
               {invitation ? rsvpOpen ? <div className="rsvp-form" aria-label="Risposta per ogni persona invitata">
                 <p className="rsvp-intro">Indica la presenza e le esigenze per ogni persona del nucleo. Potrai modificare tutto riaprendo questo link.</p>
-                {invitation.guests.map((guest) => <div className="rsvp-person" key={guest.id}><p>{guest.firstName} {guest.lastName}</p><div className="rsvp-options" role="group" aria-label={`Presenza di ${guest.firstName} ${guest.lastName}`}>
-                  <button type="button" ref={guest.id === invitation.guests[0]?.id ? answerRef : undefined} aria-pressed={answers[guest.id] === true} className={answers[guest.id] === true ? "selected" : ""} onClick={() => { setAnswers({ ...answers, [guest.id]: true }); setRsvpError(""); }}>Presente</button>
-                  <button type="button" aria-pressed={answers[guest.id] === false} className={answers[guest.id] === false ? "selected" : ""} onClick={() => { setAnswers({ ...answers, [guest.id]: false }); setRsvpError(""); }}>Assente</button>
+                {invitation.guests.map((guest) => <div className="rsvp-person" key={guest.id}><p className="rsvp-person-name">{guest.firstName} {guest.lastName}</p><div className="rsvp-options" role="group" aria-label={`Presenza di ${guest.firstName} ${guest.lastName}`}>
+                  <button type="button" ref={guest.id === invitation.guests[0]?.id ? answerRef : undefined} aria-pressed={answers[guest.id] === true} className={answers[guest.id] === true ? "selected" : ""} onClick={() => { setAnswers({ ...answers, [guest.id]: true }); setRsvpError(""); }}><span aria-hidden="true">✓</span> Presente</button>
+                  <button type="button" aria-pressed={answers[guest.id] === false} className={answers[guest.id] === false ? "selected" : ""} onClick={() => { setAnswers({ ...answers, [guest.id]: false }); setRsvpError(""); }}><span aria-hidden="true">−</span> Assente</button>
                 </div>{answers[guest.id] === true && <div className="rsvp-meal" role="group" aria-label={`Menù di ${guest.firstName} ${guest.lastName}`}>
                   <p className="small-label">Menù ed esigenze alimentari</p>
                   <div className="meal-choices">
                     <button type="button" className={mealAnswers[guest.id]?.choice === 'none' ? 'selected' : ''} aria-pressed={mealAnswers[guest.id]?.choice === 'none'} onClick={() => updateMeal(guest.id, { choice: 'none', note: '' })}>Nessuna esigenza</button>
-                    <button type="button" className={mealAnswers[guest.id]?.choice === 'needs' ? 'selected' : ''} aria-pressed={mealAnswers[guest.id]?.choice === 'needs'} onClick={() => updateMeal(guest.id, { choice: 'needs' })}>Esigenze alimentari da indicare</button>
+                    <button type="button" className={mealAnswers[guest.id]?.choice === 'needs' ? 'selected' : ''} aria-pressed={mealAnswers[guest.id]?.choice === 'needs'} onClick={() => updateMeal(guest.id, { choice: 'needs' })}>Ho esigenze alimentari</button>
                   </div>
                   {mealAnswers[guest.id]?.choice === 'needs' && <label className="meal-note">Allergie, intolleranze o scelte alimentari di {guest.firstName}<KeyboardTextarea value={mealAnswers[guest.id].note} maxLength={500} rows={3} placeholder="Per esempio: allergia alla frutta a guscio, vegetariano…" onChange={(event) => updateMeal(guest.id, { note: event.target.value })} onBlur={() => keyboard.hide()} /></label>}
                   <label className="child-menu"><input type="checkbox" checked={mealAnswers[guest.id]?.childMenu ?? false} onChange={(event) => updateMeal(guest.id, { childMenu: event.target.checked })} /> Menù bambino per {guest.firstName}</label>
@@ -553,10 +550,10 @@ export default function Prototype() {
                 {rsvpError && <p className="rsvp-error" role="alert">{rsvpError}</p>}
                 <button className="primary-action" type="button" disabled={rsvpSaving || invitation.guests.length === 0 || !invitation.guests.every(rsvpComplete)} onClick={() => void saveAnswers()}>{rsvpSaving ? "Salvataggio…" : "Salva le risposte"}</button>
                 <button className="secondary-action" type="button" onClick={() => { keyboard.hide(); setRsvpOpen(false); }}>Annulla</button>
-              </div> : <div className="rsvp-ready">{rsvpSaved && <p className="rsvp-success" role="status"><CheckCircledIcon aria-hidden="true" />Risposte salvate.</p>}{invitation.guests.some((guest) => guest.attending !== null) && <p className="rsvp-existing">{invitation.guests.map((guest) => `${guest.firstName}: ${guest.attending === true ? "presente" : guest.attending === false ? "assente" : "in attesa"}`).join(" · ")}</p>}<button className="primary-action" type="button" onClick={openRsvp}>{invitation.guests.some((guest) => guest.attending !== null) ? "Modifica le risposte" : "Conferma la presenza"}</button></div>
+              </div> : <div className="rsvp-ready">{rsvpSaved && <p className="rsvp-success" role="status"><CheckCircledIcon aria-hidden="true" />Risposte salvate.</p>}<button className="primary-action" type="button" onClick={openRsvp}>Conferma Presenza</button></div>
                 : <div className="rsvp-unavailable"><p>{inviteState === "loading" ? "Caricamento dell'invito…" : inviteState === "missing" ? "Apri il link personale presente sulla partecipazione per confermare la presenza." : inviteState === "error" ? "Non riusciamo a caricare il vostro invito. Controlla la connessione e riprova." : "Invito non disponibile. Contatta gli sposi per verificare il link."}</p>{inviteState === "error" && <button type="button" className="secondary-action" onClick={() => window.location.reload()}>Riprova</button>}</div>}
             </section>
-            <footer className="invitation-footer"><Signature /><p className="sr-only">Valentina e Riccardo · 22 Maggio 2027</p><details className="privacy-note"><summary>Privacy e attività dell'invito</summary><p>Per organizzare il matrimonio, associamo al codice della partecipazione l'apertura dell'invito, le sezioni visitate, i clic sui link, le risposte RSVP e le esigenze alimentari indicate per ciascuna persona. Questi dati sono consultabili dagli sposi nel pannello riservato per organizzare il ricevimento. Non registriamo digitazioni, movimenti del puntatore o posizione.</p></details></footer>
+            <footer className="invitation-footer"><Signature /><p className="sr-only">Valentina e Riccardo · 22 Maggio 2027</p></footer>
           </div>
         </main>
       </MobileScroll>
