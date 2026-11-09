@@ -124,7 +124,7 @@
 .day-timeline { position: relative; padding: 0; margin: 0; list-style: none; }
 .timeline-route { position: absolute; top: 0; left: 0; width: 62px; height: 100%; overflow: visible; pointer-events: none; }
 .timeline-route path { fill: none; stroke: color-mix(in srgb, var(--wedding-sage) 72%, transparent); stroke-width: 1.35; stroke-linecap: round; stroke-dasharray: 2.5 5; vector-effect: non-scaling-stroke; }
-.day-timeline li { position: relative; display: grid; grid-template-columns: 61px minmax(0, 1fr); gap: 17px; padding: 22px 0; border-bottom: 1px solid var(--wedding-hairline); }
+.day-timeline li { position: relative; display: grid; grid-template-columns: 61px minmax(0, 1fr); gap: 17px; padding: 22px 0; border-bottom: 0; }
 .day-timeline li:first-of-type { padding-top: 4px; }
 .day-timeline li:last-child { border: 0; padding-bottom: 0; }
 .timeline-stop { position: relative; z-index: 1; align-self: start; justify-self: start; width: 13px; height: 13px; margin-top: 8px; border: 1.5px solid var(--wedding-sage); border-radius: 50%; background: var(--wedding-cream); box-shadow: 0 0 0 4px rgb(248 243 232 / .7); }
@@ -466,3 +466,34 @@
 @media (prefers-reduced-motion: reduce) {
   .route-building li > div, .route-building .timeline-stop, .route-building .program-photo { opacity: 1; transform: none; scale: 1; translate: none; }
 }
+
+/* Paper-inspired actions with a readable editorial hierarchy. */
+.surprise-whatsapp {
+  display: grid; grid-template-columns: 36px minmax(0, 1fr) 18px;
+  gap: 12px; min-height: 76px; padding: 14px 16px;
+  border: 1px solid rgb(95 112 83 / .2); border-radius: 3px;
+  background: linear-gradient(120deg, rgb(220 228 207 / .65), rgb(239 239 222 / .7));
+  box-shadow: 0 3px 9px rgb(75 62 40 / .05), inset 0 1px rgb(255 255 255 / .65);
+  transition: background .2s, box-shadow .2s, translate .2s;
+}
+.surprise-whatsapp svg:first-child { width: 36px; height: 36px; }
+.surprise-whatsapp .contact-button-copy { text-align: left; }
+.contact-button-copy strong { display: block; font: 600 24px/1.1 var(--wedding-editorial-font); letter-spacing: 0; }
+.contact-button-copy small { display: block; margin-top: 5px; font: 400 12px/1.3 var(--wedding-text-font); letter-spacing: .02em; }
+.surprise-whatsapp:hover { background: rgb(222 231 210 / .85); box-shadow: 0 5px 12px rgb(75 62 40 / .09); }
+.surprise-whatsapp:active { translate: 0 1px; }
+.surprise-whatsapp:focus-visible, .gift-choice:focus-visible { outline: 2px solid var(--wedding-green); outline-offset: 5px; }
+.gift-choice {
+  position: relative; overflow: hidden; padding: 28px 20px 24px;
+  border: 1px solid rgb(154 139 110 / .24); border-radius: 3px;
+  background: #fffaf1 url('/assets/wedding/paper-texture.png') center / 390px auto;
+  box-shadow: 0 5px 16px rgb(85 64 40 / .08);
+  transition: box-shadow .25s, translate .25s;
+}
+.gift-choice::before { content: ''; position: absolute; inset: 7px; border: 1px solid rgb(154 139 110 / .13); border-radius: 1px; pointer-events: none; }
+.gift-choice .closing-icon { width: 158px; height: 132px; margin-bottom: 18px; }
+.gift-choice strong { font-size: 30px; line-height: 1.08; max-width: 220px; color: var(--wedding-green); }
+.gift-choice-description { margin-top: 12px; font-size: 19px; line-height: 1.35; color: var(--wedding-muted); }
+.gift-choice-action { width: auto; margin-top: 23px; padding: 12px 14px; gap: 10px; min-height: 44px; border-radius: 2px; background: #e5e9d9; color: var(--wedding-green); font-size: 12px; letter-spacing: .025em; text-transform: none; }
+.gift-choice:hover { background: #fffaf1 url('/assets/wedding/paper-texture.png') center / 390px auto; box-shadow: 0 8px 20px rgb(85 64 40 / .12); translate: 0 -2px; }
+.gift-choice:active { translate: 0 0; }

@@ -162,3 +162,6 @@ When any text-entry control loses focus, dismiss the simulated keyboard. If the 
 - Fixed phone chrome should not animate with pushed screens. Screen content can animate; the status bar, camera cutout, and preview chrome should stay put.
 - Keep the keyboard below the home indicator/safe area layer in z-index, and above ordinary app UI while visible.
 - Keep the home indicator as the topmost safe-area layer in the z-index above everything else in the prototype.
+
+- Action styling (9 November 2026): remove horizontal rules between program stops. Restyle WhatsApp as a soft sage action with a readable editorial title and typewriter sublabel; style the Patagonia choice as textured stationery with a larger watercolor and a distinct sage coordinate action.
+

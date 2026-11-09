@@ -492,7 +492,7 @@ export default function Prototype() {
               <p className="small-label">Il vostro complice alla festa</p>
               <p className="surprise-contact-name">Luca Ferro</p>
               <p className="surprise-contact-number">{lucaWhatsappNumber}</p>
-              {lucaWhatsappUrl ? <a className="surprise-whatsapp" href={lucaWhatsappUrl} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" onClick={() => track("external_link_clicked", "luca_whatsapp")} aria-label="Scrivi a Luca Ferro su WhatsApp con un messaggio precompilato (si apre in una nuova scheda)"><WhatsAppIcon /><span>Scrivi a Luca su WhatsApp</span><ArrowTopRightIcon aria-hidden="true" /></a>
+              {lucaWhatsappUrl ? <a className="surprise-whatsapp" href={lucaWhatsappUrl} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" onClick={() => track("external_link_clicked", "luca_whatsapp")} aria-label="Scrivi a Luca Ferro su WhatsApp con un messaggio precompilato (si apre in una nuova scheda)"><WhatsAppIcon /><span className="contact-button-copy"><strong>Scrivi a Luca</strong><small>su WhatsApp</small></span><ArrowTopRightIcon aria-hidden="true" /></a>
                 : <div className="surprise-whatsapp surprise-whatsapp-pending" aria-label="Contatto WhatsApp di Luca Ferro in arrivo"><WhatsAppIcon /><span>Contatto WhatsApp in arrivo</span></div>}
             </div>
           </section>
